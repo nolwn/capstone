@@ -18,6 +18,10 @@ What technologies will you be using?
 * Web Sockets
 * PostgresQL
 
+### Other Information
+
+![Project ERD](./media/ERD.png)
+
 # Web Directory
 
 ## Provide a brief description about your project that answers the following questions:
@@ -39,4 +43,4 @@ People who want the directory part of facebook, and nothing else.
 * Node
 * Express
 * React
-* PostgresQL
+* PostgresQLÏ
