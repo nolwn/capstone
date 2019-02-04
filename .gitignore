@@ -1,1 +1,6 @@
+# macOS stuff
 .DS_Store
+
+# npm stuff
+package-lock.json
+node_modules
