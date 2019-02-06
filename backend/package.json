@@ -18,10 +18,12 @@
   "author": "Nolan Hellyer",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "chess-rules": "^1.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "knex": "^0.16.3",
     "pg": "^7.8.0",
     "redis": "^2.8.0"

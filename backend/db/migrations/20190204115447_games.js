@@ -3,6 +3,10 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("games", table => {
     table.increments();
     table
+      .string("host")
+      .references("id")
+      .inTable("users");
+    table
       .integer("player_white")
       .references("id")
       .inTable("users");
@@ -10,7 +14,6 @@ exports.up = function(knex, Promise) {
       .integer("player_black")
       .references("id")
       .inTable("users")
-      .unique();
     table.string("previous_fen")
       .notNullable()
       .defaultTo("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");

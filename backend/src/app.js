@@ -4,11 +4,15 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 
-const authRoutes = require("./routes/auth");
-const gameRoutes = require("./routes/games");
-
 const port = process.env.PORT || 3000;
 const app = express();
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+
+const authRoutes = require("./routes/auth");
+const gameRoutes = require("./routes/games");
 
 app.use(bodyParser.json());
 app.use(cors());

@@ -13,11 +13,20 @@ const getActiveGames = (req, res, next) => {
     .then(result =>
       res.status(200).send(result)
     )
-    .catch(next)
+    .catch(next);
 }
 
 const createGame = (req, res, next) => {
+  return models.createGame(req.body)
+    .then(result => {
+      if (!result) {
+        throw {status: 400, message: "Game could not be created"};
 
+      }
+
+      res.status(201).send(result);
+    })
+    .catch(next);
 }
 
 const editGame = (req, res, next) => {

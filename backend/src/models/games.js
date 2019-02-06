@@ -30,6 +30,15 @@ const getActiveGame = (game_id) => {
   });
 };
 
+// Start a new game
+// TODO: add user who calls this route to game.
+const createGame = (game) => {
+  return knex("games")
+    .insert(game)
+    .returning("*")
+    .then(result => getAndCache(result[0].id));
+}
+
 /***********************
  *  PRIVATE FUNCTIONS  *
  ***********************/
@@ -52,4 +61,4 @@ const getAndCache = game_id => {
     .then(result => JSON.parse(result))
 }
 
-module.exports = { getActiveGame, getActiveGames };
+module.exports = { getActiveGame, getActiveGames, createGame };

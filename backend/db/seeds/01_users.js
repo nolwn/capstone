@@ -8,22 +8,22 @@ exports.seed = function(knex, Promise) {
           {
             id: 1,
             username: "Nolan",
-            password: "password"
+            password: "$2a$10$KZZ.HbZrcL7enekBtX1l7uJ6mJM8c7J5OyfY.Xta5zcIGDCfb4SSC"
           },
           {
             id: 2,
             username: "William",
-            password: "password"
+            password: "$2a$10$KZZ.HbZrcL7enekBtX1l7uJ6mJM8c7J5OyfY.Xta5zcIGDCfb4SSC"
           },
           {
             id: 3,
             username: "Edu",
-            password: "password"
+            password: "$2a$10$KZZ.HbZrcL7enekBtX1l7uJ6mJM8c7J5OyfY.Xta5zcIGDCfb4SSC"
           },
           {
             id: 4,
             username: "BabyCakes",
-            password: "password"
+            password: "$2a$10$KZZ.HbZrcL7enekBtX1l7uJ6mJM8c7J5OyfY.Xta5zcIGDCfb4SSC"
           }
       ])
       .then(() =>
