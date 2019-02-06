@@ -10,6 +10,10 @@ const GAME_ID = "game_id:";
  *  EXPORT FUNCTIONS  *
  **********************/
 
+const getActiveGames = () => {
+  return knex("")
+}
+
 const getGame = (game_id) => {
   return redisAsPromised.get(GAME_ID + game_id)
     .then(result => {
@@ -45,4 +49,4 @@ const getAndCache = game_id => {
     .then(result => JSON.parse(result))
 }
 
-module.exports = { getGame };
+module.exports = { getGame, getActiveGames };

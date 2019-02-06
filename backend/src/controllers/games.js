@@ -8,4 +8,21 @@ const getGame = (req, res, next) => {
     .catch(next);
 }
 
-module.exports = { getGame };
+const getActiveGames = (req, res, next) => {
+  return knex("games")
+    .where("started_at", null);
+}
+
+const createGame = (req, res, next) => {
+
+}
+
+const editGame = (req, res, next) => {
+
+}
+
+const deleteGame = (req, res, next) => {
+
+}
+
+module.exports = { getActiveGames, getGame, createGame, editGame, deleteGame };
