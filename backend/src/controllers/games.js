@@ -1,4 +1,4 @@
-const models = require("../models/moves");
+const models = require("../models/games");
 
 const getGame = (req, res, next) => {
   return models.getGame(1)
