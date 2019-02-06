@@ -12,6 +12,9 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("users")
       .unique();
+    table.string("previous_fen")
+      .notNullable()
+      .defaultTo("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     table.string("winner");
     table.integer("time");
     table.timestamp("started_at");
