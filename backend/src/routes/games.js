@@ -6,7 +6,7 @@ const commentRoutes = require("./comments");
 
 
 router.get("/", controllers.getActiveGames);
-router.get("/:id", controllers.getGame);
+router.get("/:id", controllers.getActiveGame);
 router.post("/", controllers.createGame);
 router.patch("/:id", controllers.editGame);
 router.delete("/:id", controllers.deleteGame);

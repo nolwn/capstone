@@ -10,11 +10,14 @@ const GAME_ID = "game_id:";
  *  EXPORT FUNCTIONS  *
  **********************/
 
+// Return games that have not started yet
 const getActiveGames = () => {
-  return knex("")
+  return knex("games")
+    .where("started_at", null);
 }
 
-const getGame = (game_id) => {
+// Return an active game state
+const getActiveGame = (game_id) => {
   return redisAsPromised.get(GAME_ID + game_id)
     .then(result => {
       if(!result) {
@@ -49,4 +52,4 @@ const getAndCache = game_id => {
     .then(result => JSON.parse(result))
 }
 
-module.exports = { getGame, getActiveGames };
+module.exports = { getActiveGame, getActiveGames };

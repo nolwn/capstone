@@ -5,8 +5,7 @@ exports.up = function(knex, Promise) {
     table
       .integer("player_white")
       .references("id")
-      .inTable("users")
-      .unique();
+      .inTable("users");
     table
       .integer("player_black")
       .references("id")

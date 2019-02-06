@@ -2,7 +2,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("turns", table => {
     table.increments();
-    table.integer("game_id")
+    table
+      .integer("game_id")
       .references("id")
       .inTable("games")
       .notNullable();
