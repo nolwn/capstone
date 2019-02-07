@@ -1,4 +1,7 @@
 const models = require("../models/games");
+const { jwtAsPromised } = require("../utils");
+
+const secret = process.env.SECRET;
 
 const getActiveGame = (req, res, next) => {
   return models.getActiveGame(req.params.id)
@@ -17,14 +20,15 @@ const getActiveGames = (req, res, next) => {
 }
 
 const createGame = (req, res, next) => {
-  return models.createGame(req.body)
+  return models.createGame(req.body, req.claim)
     .then(result => {
       if (!result) {
         throw {status: 400, message: "Game could not be created"};
-
       }
 
-      res.status(201).send(result);
+      return jwtAsPromised.sign(result, secret);
+    }).then(token => {
+      res.status(201).send(token);
     })
     .catch(next);
 }
