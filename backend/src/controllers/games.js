@@ -23,7 +23,7 @@ const createGame = (req, res, next) => {
   return models.createGame(req.body, req.claim)
     .then(result => {
       if (!result) {
-        throw {status: 400, message: "Game could not be created"};
+        throw { status: 400, message: "Game could not be created" };
       }
 
       return jwtAsPromised.sign(result, secret);
