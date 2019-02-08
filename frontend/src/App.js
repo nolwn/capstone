@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
+
 import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+
 import './App.css';
 
 class App extends Component {
@@ -9,10 +13,11 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={ Login } />
+          {/* <Route path="/dashboard" component{ Dashboard } */}
         </Switch>
       </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default connect(null, null)(App);

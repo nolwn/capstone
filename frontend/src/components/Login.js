@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import {
   Card,
   CardBody,
@@ -8,6 +10,7 @@ import {
   Label } from "reactstrap";
 
 import { request } from "../utils";
+import { setAuthentication } from "../actions/authentication";
 
 class Login extends Component {
   constructor(props) {
@@ -34,9 +37,10 @@ class Login extends Component {
 
     request("post", "/auth/login", this.state)
       .then(response => {
+        this.props.setAuthentication(response.data);
         localStorage.setItem("token", response.data)
       })
-      .catch(err => console.error("Eat poop, poopface"))
+      .catch(err => console.error(err))
   }
 
   render = () =>
@@ -53,7 +57,7 @@ class Login extends Component {
               value={ this.state.username }
               placeholder="Enter your username..."
               onChange={ this.handleChange }
-              />
+            />
           </FormGroup>
           <FormGroup>
             <Label for="password">Password: </Label>
@@ -64,7 +68,7 @@ class Login extends Component {
               value={ this.state.password }
               placeholder="Enter your password..."
               onChange={ this.handleChange }
-              />
+            />
           </FormGroup>
           <FormGroup>
             <Input
@@ -77,4 +81,9 @@ class Login extends Component {
   </div>
 }
 
-export default Login;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    setAuthentication
+  }, dispatch)
+
+export default connect(null, mapDispatchToProps)(Login);
