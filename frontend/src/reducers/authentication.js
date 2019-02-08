@@ -8,7 +8,7 @@ const unAuthenticated = {
 const setAuthentication = (state = unAuthenticated, action) => {
   switch (action.type) {
     case SET_AUTHENTICATION:
-    console.log("tasty poop")
+      console.log("tasty poop")
       return { claim: action.payload, panding: false };
 
     default:

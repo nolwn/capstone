@@ -38,7 +38,9 @@ class Login extends Component {
     request("post", "/auth/login", this.state)
       .then(response => {
         this.props.setAuthentication(response.data);
-        localStorage.setItem("token", response.data)
+        localStorage.setItem("token", response.data);
+
+        this.props.history.push("/");
       })
       .catch(err => console.error(err))
   }
