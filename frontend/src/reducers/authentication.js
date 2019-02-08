@@ -5,15 +5,15 @@ const unAuthenticated = {
   claim: null
 }
 
-const setAuthentication = (state = unAuthenticated, action) => {
+const authentication = (state = unAuthenticated, action) => {
   switch (action.type) {
     case SET_AUTHENTICATION:
       console.log("tasty poop")
-      return { claim: action.payload, panding: false };
+      return { claim: action.payload, pending: false };
 
     default:
       return state;
   }
 }
 
-export { setAuthentication }
+export { authentication }

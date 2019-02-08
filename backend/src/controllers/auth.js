@@ -25,4 +25,8 @@ const login = (req, res, next) => {
     .catch(next);
 }
 
-module.exports = { login };
+const token = (req, res, next) => {
+  res.status(200).send(req.headers.authorization);
+}
+
+module.exports = { login, token };

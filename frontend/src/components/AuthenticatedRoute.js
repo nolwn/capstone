@@ -4,8 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const AuthenticatedRoute = props => {
-  console.log(props);
-  if (!props.authentication.pending && !props.authentication.claim) {
+  if (props.authentication.pending && !props.authentication.claim) {
     return <span>Loading...</span>
 
   } else if(props.authentication.claim) {
@@ -17,7 +16,7 @@ const AuthenticatedRoute = props => {
 }
 
 const mapStateToProps = state => ({
-  authentication: state.setAuthentication
+  authentication: state.authentication
 });
 
 export default connect(mapStateToProps)(AuthenticatedRoute)

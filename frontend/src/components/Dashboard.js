@@ -1,6 +1,8 @@
 import React from "react";
 
 const Dashboard = () =>
-  <div>All the poops</div>
+  <div className="container">
+    <h1>ChessMatch</h1>
+  </div>
 
 export default Dashboard
