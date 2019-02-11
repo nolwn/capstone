@@ -5,17 +5,15 @@ const GET_GAMES = "GET_GAMES";
 const getGames = () => {
   console.log("outer thunk");
 
-  return async (dispatch) => {
+  return (dispatch) => {
     console.log("inner thunk");
-    let games;
-    try {
-      games = await request("get", "/games")
 
-    } catch(err) {
-      console.log(err)
-    }
-
-    return { type: GET_GAMES, payload: games }
+    return request("get", "/games")
+      .then(({ data }) => {
+        console.log(data);
+        dispatch({ type: GET_GAMES, payload: data });
+      })
+      .catch(err => console.log(err));
   }
 }
 

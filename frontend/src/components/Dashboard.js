@@ -7,17 +7,11 @@ import Lobby from "./Lobby";
 import { getGames } from "../actions/lobby";
 
 class Dashboard extends Component {
-  componentDidMount() {
-    console.log("mounted");
-    getGames();
-  }
-
-
   render() {
     return (
       <div className="container">
         <h1>ChessMatch</h1>
-
+        <Lobby />
       </div>
     );
   }
@@ -26,4 +20,4 @@ class Dashboard extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getGames }, dispatch)
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default connect(null, null)(Dashboard);
