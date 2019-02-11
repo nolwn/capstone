@@ -14,7 +14,14 @@ const GAME_ID = "game_id:";
 // Return games that have not started yet
 const getActiveGames = () => {
   return knex("games")
-    .where("started_at", null);
+    .fullOuterJoin("users as playerWhite", "playerWhite.id", "games.player_white")
+    .fullOuterJoin("users as playerBlack", "playerBlack.id", "games.player_black")
+    .where("started_at", null)
+    .select(
+      "games.id",
+      "playerBlack.username as playerWhite",
+      "playerWhite.username as playerBlack"
+    );
 }
 
 // Return an active game state
@@ -49,7 +56,7 @@ const createGame = (game, claim) => {
 const getAndCache = game_id => {
   console.log(game_id);
   return knex("games")
-    .where("id", game_id)
+    .where("games.id", game_id)
     .first()
     .then(result => {
       if(!result) {
@@ -74,7 +81,7 @@ const getAndCache = game_id => {
 const addPlayerToGame = (game, host) => {
   const newGame = { ...game };
 
-  newGame.host = host.id;
+  newGame.host = host.username;
   newGame.guest = null;
 
   return newGame;
@@ -82,8 +89,6 @@ const addPlayerToGame = (game, host) => {
 
 const generateNewToken = (game, claim) => {
   const newClaim = { ...claim };
-
-  console.log(newClaim);
 
   newClaim.games[`game-${game.id}`] = "host";
 

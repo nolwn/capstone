@@ -27,7 +27,8 @@ const createGame = (req, res, next) => {
       }
 
       return jwtAsPromised.sign(result, secret);
-    }).then(token => {
+    })
+    .then(token => {
       res.status(201).send(token);
     })
     .catch(next);

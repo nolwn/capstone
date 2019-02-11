@@ -17,7 +17,7 @@ class Lobby extends Component {
     <CardBody>
       {
         this.props.lobby.map(game => {
-          return <LobbyGame game={ game } />
+          return <LobbyGame key={ game.id } game={ game } />
         })
       }
     </CardBody>
