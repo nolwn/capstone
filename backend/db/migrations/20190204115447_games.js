@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("games", table => {
     table.increments();
     table
-      .string("host")
+      .integer("host")
       .references("id")
       .inTable("users");
     table

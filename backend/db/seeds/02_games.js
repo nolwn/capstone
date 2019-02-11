@@ -18,8 +18,18 @@ exports.seed = function(knex, Promise) {
           {
             id: 3,
             player_white: 2,
-            player_white: 3,
+            player_black: 3,
             started_at: new Date()
+          },
+          {
+            id: 4,
+            player_white: 2,
+            player_black: null
+          },
+          {
+            id: 5,
+            player_white: null,
+            player_black: 1
           }
         ])
         .then(() =>

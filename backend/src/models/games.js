@@ -14,8 +14,8 @@ const GAME_ID = "game_id:";
 // Return games that have not started yet
 const getActiveGames = () => {
   return knex("games")
-    .fullOuterJoin("users as playerWhite", "playerWhite.id", "games.player_white")
-    .fullOuterJoin("users as playerBlack", "playerBlack.id", "games.player_black")
+    .leftJoin("users as playerWhite", "playerWhite.id", "games.player_white")
+    .leftJoin("users as playerBlack", "playerBlack.id", "games.player_black")
     .where("started_at", null)
     .select(
       "games.id",

@@ -1,9 +1,10 @@
 import React from "react";
 
 const LobbyGame = props =>
-  <div>
-    <span>{ props.game.id }</span>
-    <span> { props.game.player_white }</span>
-  </div>
+  <tr>
+    <td>{ props.game.id }</td>
+    <td> { props.game.playerWhite }</td>
+    <td> { props.game.playerBlack } </td>
+  </tr>
 
 export default LobbyGame;

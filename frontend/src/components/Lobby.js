@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CardBody } from "reactstrap";
+import { CardBody, Table } from "reactstrap";
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux";
 
@@ -15,11 +15,22 @@ class Lobby extends Component {
 
   render = () =>
     <CardBody>
-      {
-        this.props.lobby.map(game => {
-          return <LobbyGame key={ game.id } game={ game } />
-        })
-      }
+      <Table>
+        <thead>
+          <tr>
+            <td>Game ID</td>
+            <td>White</td>
+            <td>Black</td>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            this.props.lobby.map(game => {
+              return <LobbyGame key={ game.id } game={ game } />
+            })
+          }
+        </tbody>
+      </Table>
     </CardBody>
 }
 
