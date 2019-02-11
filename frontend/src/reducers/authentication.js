@@ -16,4 +16,4 @@ const authentication = (state = unAuthenticated, action) => {
   }
 }
 
-export { authentication }
+export default authentication;

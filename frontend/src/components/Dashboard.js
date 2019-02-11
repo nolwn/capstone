@@ -1,8 +1,29 @@
-import React from "react";
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const Dashboard = () =>
-  <div className="container">
-    <h1>ChessMatch</h1>
-  </div>
+import store from "../store";
+import Lobby from "./Lobby";
+import { getGames } from "../actions/lobby";
 
-export default Dashboard
+class Dashboard extends Component {
+  componentDidMount() {
+    console.log("mounted");
+    getGames();
+  }
+
+
+  render() {
+    return (
+      <div className="container">
+        <h1>ChessMatch</h1>
+
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getGames }, dispatch)
+
+export default connect(null, mapDispatchToProps)(Dashboard);
