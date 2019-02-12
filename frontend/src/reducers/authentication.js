@@ -1,4 +1,4 @@
-import { SET_AUTHENTICATION } from "../actions/authentication";
+import { JOIN_GAME, SET_AUTHENTICATION } from "../actions/authentication";
 
 const unAuthenticated = {
   pending: true,
@@ -7,6 +7,9 @@ const unAuthenticated = {
 
 const authentication = (state = unAuthenticated, action) => {
   switch (action.type) {
+    case JOIN_GAME:
+      return { claim: action.payload, pending: false };
+
     case SET_AUTHENTICATION:
       return { claim: action.payload, pending: false };
 

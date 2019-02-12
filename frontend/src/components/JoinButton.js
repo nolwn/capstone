@@ -1,11 +1,18 @@
 import React from "react"
 import { Button } from "reactstrap";
 
-const handleJoin = (color) => {
+import { joinGame } from "../actions/authentication";
+import { request } from "../utils";
+import store from "../store";
 
+const handleJoin = (game, color) => {
+  console.log(color, game)
+  store.dispatch(joinGame(game, color));
 }
 
 const JoinButton = props =>
-  <Button>Join as { props.color }</Button>;
+  <Button
+    onClick= { e => handleJoin(props.game, props.color) }
+  >Join as { props.color }</Button>;
 
 export default JoinButton;

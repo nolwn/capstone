@@ -7,7 +7,7 @@ const request = (method, path, data) => {
   return axios(path, {
     method,
     headers: {
-      "Authorization": localStorage.getItem("token"),
+      "Authorization": "bearer " + localStorage.getItem("token"),
     },
     url: server + path,
     data
