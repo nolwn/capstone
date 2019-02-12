@@ -26,7 +26,7 @@ const login = (req, res, next) => {
 }
 
 const token = (req, res, next) => {
-  res.status(200).send(req.headers.authorization);
+  res.status(200).send(req.headers.authorization.split(" ")[1]);
 }
 
 module.exports = { login, token };
