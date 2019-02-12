@@ -38,7 +38,7 @@ const getActiveGame = (game_id) => {
   });
 };
 
-// Start a new game
+// Start a new game, cache in Redis, return a new JWT token
 // TODO: add user who calls this route to game.
 const createGame = (game, claim) => {
   return knex("games")
@@ -49,8 +49,9 @@ const createGame = (game, claim) => {
     .then(cachedGame => generateNewToken(cachedGame, claim, "white"));
 }
 
-const joinGame = (game, claim) => {
-  const whereObject = { id: game.id };
+// Join a game, cache in Redis, return a new JWT token
+const joinGame = (game_id, game, claim) => {
+  const whereObject = { id: game_id };
   whereObject[`player_${game.color}`] = null;
   return knex("games")
     .update(`player_${game.color}`, claim.id)

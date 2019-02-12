@@ -20,7 +20,7 @@ const getActiveGames = (req, res, next) => {
 }
 
 const createGame = (req, res, next) => {
-  return models.createGame(req.body, req.claim)
+  return models.createGame( req.body, req.claim)
     .then(result => {
       if (!result) {
         throw { status: 400, message: "Game could not be created" };
@@ -35,7 +35,7 @@ const createGame = (req, res, next) => {
 }
 
 const joinGame = (req, res, next) => {
-  return models.joinGame(req.body, req.claim)
+  return models.joinGame(req.params.game_id, req.body, req.claim)
     .then(result => {
       if (!result) {
         throw { status: 400, message: "Game could not be joined" };
