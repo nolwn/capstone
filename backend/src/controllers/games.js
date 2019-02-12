@@ -34,12 +34,23 @@ const createGame = (req, res, next) => {
     .catch(next);
 }
 
-const editGame = (req, res, next) => {
+const joinGame = (req, res, next) => {
+  return models.joinGame(req.body, req.claim)
+    .then(result => {
+      if (!result) {
+        throw { status: 400, message: "Game could not be joined" };
+      }
 
+      return jwtAsPromised.sign(result, secret);
+    })
+    .then(token => {
+      res.status(200).send(token);
+    })
+    .catch(next);
 }
 
 const deleteGame = (req, res, next) => {
 
 }
 
-module.exports = { getActiveGames, getActiveGame, createGame, editGame, deleteGame };
+module.exports = { getActiveGames, getActiveGame, createGame, joinGame, deleteGame };

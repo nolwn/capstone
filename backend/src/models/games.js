@@ -19,8 +19,8 @@ const getActiveGames = () => {
     .where("started_at", null)
     .select(
       "games.id",
-      "playerBlack.username as playerWhite",
-      "playerWhite.username as playerBlack"
+      "playerWhite.username as playerWhite",
+      "playerBlack.username as playerBlack"
     );
 }
 
@@ -45,14 +45,26 @@ const createGame = (game, claim) => {
     .insert(game)
     .returning("*")
     .then(storedGame => getAndCache(storedGame[0].id))
-    .then(cachedGame => addPlayerToGame(cachedGame, claim))
-    .then(cachedGame => generateNewToken(cachedGame, claim));
+    .then(cachedGame => addHostToGame(cachedGame, claim))
+    .then(cachedGame => generateNewToken(cachedGame, claim, "white"));
+}
+
+const joinGame = (game, claim) => {
+  const whereObject = { id: game.id };
+  whereObject[`player_${game.color}`] = null;
+  return knex("games")
+    .update(`player_${game.color}`, claim.id)
+    .where(whereObject)
+    .returning("*")
+    .then(storedGame => getAndCache(storedGame[0].id))
+    .then(cachedGame => generateNewToken(cachedGame, claim, game.color));
 }
 
 /***********************
  *  PRIVATE FUNCTIONS  *
  ***********************/
 
+// TODO: do I need to retrieve the game from the db? Why? It's slower...
 const getAndCache = game_id => {
   console.log(game_id);
   return knex("games")
@@ -78,7 +90,7 @@ const getAndCache = game_id => {
     });
 }
 
-const addPlayerToGame = (game, host) => {
+const addHostToGame = (game, host) => {
   const newGame = { ...game };
 
   newGame.host = host.username;
@@ -87,12 +99,12 @@ const addPlayerToGame = (game, host) => {
   return newGame;
 }
 
-const generateNewToken = (game, claim) => {
+const generateNewToken = (game, claim, color) => {
   const newClaim = { ...claim };
 
-  newClaim.games[`game-${game.id}`] = "host";
+  newClaim.games[`game-${game.id}`] = color;
 
   return newClaim;
 }
 
-module.exports = { getActiveGame, getActiveGames, createGame };
+module.exports = { getActiveGame, getActiveGames, createGame, joinGame };

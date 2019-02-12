@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { Row, Col } from "reactstrap";
 
 import store from "../store";
 import Lobby from "./Lobby";
@@ -11,7 +12,15 @@ class Dashboard extends Component {
     return (
       <div className="container">
         <h1>ChessMatch</h1>
-        <Lobby />
+        <Row>
+          <Col sm="4">
+            <h2>Your Games</h2>
+          </Col>
+          <Col>
+            <h2>Game Lobby</h2>
+            <Lobby />
+          </Col>
+        </Row>
       </div>
     );
   }
