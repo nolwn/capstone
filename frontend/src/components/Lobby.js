@@ -3,7 +3,6 @@ import { CardBody, Table } from "reactstrap";
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux";
 
-import store from "../store";
 import { getGames } from "../actions/lobby";
 import LobbyGame from "./LobbyGame";
 
@@ -40,7 +39,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ getGames }, dispatch);
 
 const mapStateToProps = state => {
-  console.log(state)
   return { lobby: state.lobby }
 }
 

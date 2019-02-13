@@ -2,7 +2,6 @@ import React from "react"
 import { Button } from "reactstrap";
 
 import { joinGame } from "../actions/authentication";
-import { request } from "../utils";
 import store from "../store";
 
 const handleJoin = (game, color) => {

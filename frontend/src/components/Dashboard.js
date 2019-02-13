@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 
-import store from "../store";
 import Lobby from "./Lobby";
-import { getGames } from "../actions/lobby";
 
 class Dashboard extends Component {
   pushHistory = path => {
@@ -30,7 +26,4 @@ class Dashboard extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getGames }, dispatch)
-
-export default connect(null, null)(Dashboard);
+export default Dashboard;

@@ -1,7 +1,4 @@
 import React from "react";
-import { Col } from "reactstrap";
-
-import Piece from "./Piece";
 
 const boardColStyle = dark =>
   ({

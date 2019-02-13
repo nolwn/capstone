@@ -1,5 +1,4 @@
 import React from "react";
-import { Row } from "reactstrap";
 
 import BoardCol from "./BoardCol";
 
@@ -14,9 +13,9 @@ const BoardRow = props => {
   return (
     <div style={ boardRowStyle }>
       {
-        [ ..."abcdefgh" ].map(col => {
+        [ ..."abcdefgh" ].map((col, idx) => {
           dark = !dark;
-          return <BoardCol dark={ !dark } />
+          return <BoardCol key={ idx } dark={ !dark } />
         })
       }
     </div>)

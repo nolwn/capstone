@@ -4,7 +4,6 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const AuthenticatedRoute = props => {
-  console.log(props)
   if (props.authentication.pending && !props.authentication.claim) {
     return <span>Loading...</span>
 

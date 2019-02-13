@@ -6,11 +6,16 @@ const pieceStyle = {
   top: "525px"
 }
 
+// Get the x and y values based on board index.
 const getPosFromIndex = index =>
   ({
     x: (index) % 8 * 75,
     y: -1 * Math.floor((index) / 8) * 75
   })
+
+// Get the index from a board position.
+const getIndexFromPos = pos =>
+  (pos.y / 75) * 8 + (pos.x / 75)
 
 const Piece = props =>
   <Draggable
