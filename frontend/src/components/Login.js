@@ -20,6 +20,8 @@ class Login extends Component {
       username: "",
       password: ""
     }
+
+    console.log("login", props);
   }
 
   handleChange = (e) => {
@@ -37,6 +39,7 @@ class Login extends Component {
 
     request("post", "/auth/login", this.state)
       .then(response => {
+        console.log("rep", response)
         this.props.setAuthentication(response.data);
         localStorage.setItem("token", response.data);
 

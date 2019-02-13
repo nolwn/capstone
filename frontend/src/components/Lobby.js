@@ -8,10 +8,8 @@ import { getGames } from "../actions/lobby";
 import LobbyGame from "./LobbyGame";
 
 class Lobby extends Component {
-  componentDidMount() {
-    console.log("mounted");
-    store.dispatch(getGames());
-  }
+  componentDidMount = () =>
+    this.props.getGames();
 
   render = () =>
     <CardBody>
@@ -26,7 +24,11 @@ class Lobby extends Component {
         <tbody>
           {
             this.props.lobby.map(game => {
-              return <LobbyGame key={ game.id } game={ game } />
+              return <LobbyGame
+                key={ game.id }
+                pushHistory={ this.props.pushHistory }
+                game={ game }
+              />
             })
           }
         </tbody>
@@ -38,7 +40,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ getGames }, dispatch);
 
 const mapStateToProps = state => {
+  console.log(state)
   return { lobby: state.lobby }
 }
 
-export default connect(mapStateToProps, null)(Lobby);
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby);

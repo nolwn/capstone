@@ -6,6 +6,8 @@ import { bindActionCreators } from "redux";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import Game from "./components/Game";
+
 import { request } from "./utils";
 import { setAuthentication } from "./actions/authentication";
 
@@ -14,7 +16,10 @@ import './App.css';
 class App extends Component {
   componentDidMount() {
     request("get", "/auth/token")
-      .then(response => this.props.setAuthentication(response.data))
+      .then(response => {
+        console.log("response", response)
+        this.props.setAuthentication(response.data)
+      })
       .catch(err => {
         console.log(err)
         this.props.setAuthentication(null)
@@ -26,6 +31,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={ Login } />
+          <AuthenticatedRoute path="/game" component={ Game } />
           <AuthenticatedRoute path="/" component={ Dashboard } />
         </Switch>
       </BrowserRouter>

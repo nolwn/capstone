@@ -8,6 +8,10 @@ import Lobby from "./Lobby";
 import { getGames } from "../actions/lobby";
 
 class Dashboard extends Component {
+  pushHistory = path => {
+    this.props.history.push(path);
+  }
+
   render() {
     return (
       <div className="container">
@@ -18,7 +22,7 @@ class Dashboard extends Component {
           </Col>
           <Col>
             <h2>Game Lobby</h2>
-            <Lobby />
+            <Lobby pushHistory={ this.pushHistory } />
           </Col>
         </Row>
       </div>

@@ -9,6 +9,7 @@ const LobbyGame = props =>
         props.game.playerWhite :
         <JoinButton
           game={ props.game.id }
+          pushHistory={ props.pushHistory }
           color="white"
         /> }
     </td>
@@ -16,6 +17,7 @@ const LobbyGame = props =>
         props.game.playerBlack :
         <JoinButton
           game={ props.game.id }
+          pushHistory={ props.pushHistory }
           color="black"
         /> }
     </td>
