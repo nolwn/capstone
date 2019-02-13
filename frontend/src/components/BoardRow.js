@@ -4,20 +4,22 @@ import { Row } from "reactstrap";
 import BoardCol from "./BoardCol";
 
 const boardRowStyle = {
-
+  width: "600px",
+  display: "flex"
 }
 
 const BoardRow = props => {
   let dark = props.dark;
+
   return (
-    <Row>
+    <div style={ boardRowStyle }>
       {
         [ ..."abcdefgh" ].map(col => {
           dark = !dark;
           return <BoardCol dark={ !dark } />
         })
       }
-    </Row>)
+    </div>)
 }
 
 export default BoardRow;

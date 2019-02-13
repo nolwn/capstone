@@ -1,6 +1,7 @@
 import React from "react";
 import { Col } from "reactstrap";
-import Draggable from "react-draggable";
+
+import Piece from "./Piece";
 
 const boardColStyle = dark =>
   ({
@@ -9,22 +10,11 @@ const boardColStyle = dark =>
     width: "75px"
   });
 
-const pieceWrapperStyle =
-  {
-    height: "100%",
-    width: "100%"
-  }
-
 const BoardCol = props =>
 <div>
   <div
     style={ boardColStyle(props.dark) }
-    >
-    <Draggable
-      grid={ [75, 75] }
-    >
-      <img draggable="false" src="./img/white-king.svg" />
-    </Draggable>
+  >
   </div>
 </div>
 
