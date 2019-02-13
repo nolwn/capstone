@@ -14,8 +14,14 @@ const Pieces = props => {
   console.log(props.match);
   return <div style={ piecesStyle }>
     {
-      props.match.reduce((acc, cur) => {
-        return cur ? [ ...acc, <Piece color={ cur.side } piece={ cur.type } /> ] :
+      props.match.reduce((acc, cur, idx) => {
+        return cur ? [ ...acc,
+          <Piece
+            color={ cur.side }
+            piece={ cur.type }
+            index={ idx }
+          />
+      ] :
         acc;
       }, []
     )
