@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import chess from "chess-rules";
 
+import Highlight from "./Highlight";
 import Piece from "./Piece";
 
 const piecesStyle = {
@@ -11,31 +12,35 @@ const piecesStyle = {
   width: "75px"
 }
 
+
 // const moves = position =>
 //   chess.getAvailableMoves(position)
 
-const Pieces = props => {
-  // moves(props.match)
+class Pieces extends Component {
+  // moves(this.props.position)
 
-  return <div style={ piecesStyle }>
-    {
-      props.match.board.reduce((acc, cur, idx) => {
-        return cur ? [ ...acc,
-          <Piece
-            key={ idx }
-            color={ cur.side }
-            piece={ cur.type }
-            index={ idx }
-            match={ props.match }
-          />
-      ] :
-        acc;
-      }, []
-    )
-  }
-  </div>
+  render = () =>
+    <div style={ piecesStyle }>
+      {
+        this.props.position.board.reduce((acc, cur, idx) => {
+          return cur ? [ ...acc,
+            <Piece
+              key={ idx }
+              color={ cur.side }
+              piece={ cur.type }
+              index={ idx }
+              position={ this.props.position }
+              highlights={ this.props.highlights }
+            />
+        ] :
+          acc;
+        }, []
+      )
+    }
+    { this.highlights }
+    </div>
 }
 
-const mapStateToProps = ({ match }) => ({ match });
+const mapStateToProps = ({ position }) => ({ position });
 
 export default connect(mapStateToProps)(Pieces);

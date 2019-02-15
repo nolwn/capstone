@@ -4,12 +4,12 @@ import logger from "redux-logger";
 
 import authentication from "./reducers/authentication";
 import lobby from "./reducers/lobby";
-import match from "./reducers/match";
+import position from "./reducers/position";
 
 const reducers = combineReducers({
   authentication,
   lobby,
-  match
+  position
 });
 
 export default createStore(reducers, applyMiddleware(thunk, logger));
