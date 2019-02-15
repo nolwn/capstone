@@ -17,7 +17,21 @@ const piecesStyle = {
 //   chess.getAvailableMoves(position)
 
 class Pieces extends Component {
-  // moves(this.props.position)
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      highlights: []
+    }
+  }
+
+  addHighlights = highlights => {
+    this.setState({ ...this.state, highlights });
+  }
+
+  removeHighlights = () => {
+    this.setState({ ...this.state, highlights: [] });
+  }
 
   render = () =>
     <div style={ piecesStyle }>
@@ -30,14 +44,15 @@ class Pieces extends Component {
               piece={ cur.type }
               index={ idx }
               position={ this.props.position }
-              highlights={ this.props.highlights }
+              addHighlights={ this.addHighlights }
+              removeHighlights={ this.removeHighlights }
             />
         ] :
           acc;
         }, []
       )
     }
-    { this.highlights }
+    { this.state.highlights }
     </div>
 }
 

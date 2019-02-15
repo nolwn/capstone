@@ -33,7 +33,7 @@ class Piece extends Component{
   getIndexFromPos = pos =>
     (Math.abs(pos.y) / 75) * 8 + (Math.abs(pos.x) / 75)
 
-  handleDrag = (start, data, position) => {
+  handleDrag = (start, data, position, removeHighlights) => {
     const moveIndex = this.getIndexFromPos({ x: data.lastX, y: data.lastY });
     const legalMoves = chess.getAvailableMoves(position);
     const playerMove = legalMoves.filter(move =>
@@ -41,6 +41,7 @@ class Piece extends Component{
     );
 
     this.pieceStyle.zIndex = "inherit";
+    removeHighlights();
 
     if (playerMove.length) {
       const updatedPosition = chess.applyMove(position, playerMove[0]);
@@ -51,14 +52,17 @@ class Piece extends Component{
     }
   }
 
-  showOptions = (start, data, position, highlights) => {
+  showOptions = (start, data, position, addHighlights) => {
     const moveIndex = this.getIndexFromPos({ x: data.lastX, y: data.lastY });
     const legalMoves = chess.getAvailableMoves(position);
-    const possibleMoves = legalMoves.filter(move =>
-      move.src === start
+    console.log(legalMoves);
+    const possibleMoves = legalMoves.reduce((acc, move) => {
+
+      return [ ...acc, move.src === start ? <Highlight pos={ this.getPosFromIndex(move.dst) } /> : null ]
+    }, []
     );
 
-    highlights = [ ...highlights, <Highlight /> ]
+    addHighlights(possibleMoves)
 
     this.pieceStyle.zIndex = 10;
   }
@@ -75,12 +79,17 @@ class Piece extends Component{
             this.props.index,
             data,
             this.props.position,
-            this.props.highlights
+            this.props.addHighlights
           )
       }
       onStop={
         (e, data) =>
-          this.handleDrag(this.props.index, data, this.props.position)
+          this.handleDrag(
+            this.props.index,
+            data,
+            this.props.position,
+            this.props.removeHighlights
+          )
       }
     >
       <img
