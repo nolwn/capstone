@@ -46,7 +46,7 @@ const joinGame = (req, res, next) => {
     .then(token => {
       res.status(200).send(token);
     })
-    .catch(next);
+    .catch(err => console.log(err));
 }
 
 const deleteGame = (req, res, next) => {

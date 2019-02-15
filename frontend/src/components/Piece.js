@@ -95,7 +95,7 @@ class Piece extends Component{
       <img
         style={ this.pieceStyle }
         draggable="false"
-        src={ `./img/${this.props.color}-${this.props.piece}.svg` }
+        src={ `/img/${this.props.color}-${this.props.piece}.svg` }
       />
   </Draggable>;
 }

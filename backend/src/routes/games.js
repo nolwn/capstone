@@ -13,7 +13,7 @@ router.patch("/:game_id/join", isAuthenticated, controllers.joinGame);
 router.delete("/:game_id", isAuthenticated, controllers.deleteGame);
 
 
-router.use(turnRoutes);
-router.use(commentRoutes);
+router.use("/turns", turnRoutes);
+router.use("/comments", commentRoutes);
 
 module.exports = router;

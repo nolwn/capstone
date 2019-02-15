@@ -5,23 +5,28 @@ const secret = process.env.SECRET;
 
 const isAuthenticated = (req, res, next) => {
   if (!req.headers.authorization) {
+    console.log("no headers")
+
     next({ status: 400, message: "Bad Request" });
 
   } else {
     const [_, token] = req.headers.authorization.split(" ");
+    console.log("THING")
 
-    jwtAsPromised.verify(token, secret)
-    .then(result => {
-      console.log(result)
-      req.claim = result;
+    return jwtAsPromised.verify(token, secret)
+      .then(result => {
+        console.log(result)
+        req.claim = result;
 
-      next();
-    })
-    .catch(next);
+        next();
+      })
+      .catch(err => {
+        console.log("err")
+        next(err)
+      });
+      console.console.log();("err")
   }
 }
-
-// TODO: add `isHost`
 
 const isAuthorized = (req, res, next) => {
 

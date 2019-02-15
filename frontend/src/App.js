@@ -30,7 +30,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={ Login } />
-          <AuthenticatedRoute path="/game" component={ Game } />
+          <AuthenticatedRoute path="/game/:game_id" component={ Game } />
           <AuthenticatedRoute path="/" component={ Dashboard } />
         </Switch>
       </BrowserRouter>

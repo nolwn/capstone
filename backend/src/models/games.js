@@ -1,11 +1,9 @@
-const chessRules = require("chess-rules");
 const redis = require("redis");
 
 const knex = require("../../db");
-const { jwtAsPromised } = require("../utils");
-const { redisAsPromised } = require("../utils");
+const { jwtAsPromised, redisAsPromised, getAndCache } = require("../utils");
 
-const GAME_ID = "game_id:";
+const GAME_ID = "game_id_";
 
 /**********************
  *  EXPORT FUNCTIONS  *
@@ -25,7 +23,7 @@ const getActiveGames = () => {
 }
 
 // Return an active game state
-const getActiveGame = (game_id) => {
+const getActiveGame = game_id => {
   return redisAsPromised.get(GAME_ID + game_id)
     .then(result => {
       if(!result) {
@@ -63,34 +61,8 @@ const joinGame = (game_id, game, claim) => {
 }
 
 /***********************
- *  PRIVATE FUNCTIONS  *
+ *  HELPER FUNCTIONS  *
  ***********************/
-
-// TODO: do I need to retrieve the game from the db? Why? It's slower...
-const getAndCache = game_id => {
-  console.log(game_id);
-  return knex("games")
-    .where("games.id", game_id)
-    .first()
-    .then(result => {
-      if(!result) {
-        throw { status: 404, message: "Game not found" };
-
-      } else {
-        console.log("caching...");
-
-        const position = chessRules.fenToPosition(result["previous_fen"]);
-        redisAsPromised.set(GAME_ID + game_id, JSON.stringify(position));
-
-        return redisAsPromised.get(GAME_ID + game_id);
-      }
-    })
-    .then(result => JSON.parse(result))
-    .then(cachedGame => {
-      cachedGame.id = game_id;
-      return cachedGame;
-    });
-}
 
 const addHostToGame = (game, host) => {
   const newGame = { ...game };

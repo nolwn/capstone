@@ -13,7 +13,8 @@ const JoinButton = props =>
   <Button
     onClick= { e => {
       handleJoin(props.game, props.color)
-      props.pushHistory(`/game`);
+      console.log(props.game)
+      props.pushHistory(`/game/${props.game}`);
     }
   }
   >Join as { props.color }</Button>;
