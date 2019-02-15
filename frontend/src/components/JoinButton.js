@@ -18,5 +18,4 @@ const JoinButton = props =>
   }
   >Join as { props.color }</Button>;
 
-
 export default JoinButton;

@@ -57,6 +57,7 @@ const joinGame = (game_id, game, claim) => {
     .update(`player_${game.color}`, claim.id)
     .where(whereObject)
     .returning("*")
+    .then(storedGame => startGame(storedGame[0].id))
     .then(storedGame => getAndCache(storedGame[0].id))
     .then(cachedGame => generateNewToken(cachedGame, claim, game.color));
 }
@@ -99,6 +100,12 @@ const addHostToGame = (game, host) => {
 
   return newGame;
 }
+
+const startGame = (game_id) =>
+  knex("games")
+    .where({ id: game_id })
+    .update("started_at", knex.fn.now())
+    .returning("*");
 
 const generateNewToken = (game, claim, color) => {
   const newClaim = { ...claim };

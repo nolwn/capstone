@@ -2,7 +2,7 @@ import React from "react";
 
 const boardColStyle = dark =>
   ({
-    background: dark ? "#9B5A16" : "#F3C29F",
+    background: dark ? "#aeaeae" : "#FFF",
     height: "75px",
     width: "75px"
   });
