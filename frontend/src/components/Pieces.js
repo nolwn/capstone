@@ -40,6 +40,7 @@ class Pieces extends Component {
           return cur ? [ ...acc,
             <Piece
               key={ idx }
+              gameId = { this.props.gameId }
               color={ cur.side }
               piece={ cur.type }
               index={ idx }

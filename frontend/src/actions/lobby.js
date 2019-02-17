@@ -8,6 +8,7 @@ const getGames = () =>
       .then(({ data }) =>
         dispatch({ type: GET_GAMES, payload: data })
       )
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
+
 
 export { GET_GAMES, getGames };

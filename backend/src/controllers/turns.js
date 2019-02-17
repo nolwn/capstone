@@ -1,14 +1,14 @@
 const models = require("../models/turns");
 
 const whiteTurn = (req, res, next) =>
-  models(req.params.game_id, req.body)
-    .then(state => req.status(201).send(state))
+  models.whiteTurn(req.params.game_id, req.body)
+    .then(state => res.status(201).send(state))
     .catch(next);
 
 
 const blackTurn = (req, res, mext) => {
   models(req.body)
-    .then(state => req.status(200).send(state))
+    .then(state => res.status(200).send(state))
     .catch(next);
 }
 

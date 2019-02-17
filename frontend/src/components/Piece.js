@@ -4,7 +4,7 @@ import chess from "chess-rules";
 
 import Highlight from "./Highlight";
 import store from "../store";
-import { updatePosition } from "../actions/position";
+import { updatePosition, revertPosition } from "../actions/position";
 
 class Piece extends Component{
   constructor(props) {
@@ -14,12 +14,6 @@ class Piece extends Component{
       position: "absolute",
       top: "525px"
     };
-
-    this.state = {}
-  }
-
-  componentWillUnmount = () => {
-    console.log("unmount")
   }
 
   // Get the x and y values based on board index.
@@ -44,12 +38,13 @@ class Piece extends Component{
     removeHighlights();
 
     if (playerMove.length) {
-      const updatedPosition = chess.applyMove(position, playerMove[0]);
-      store.dispatch(updatePosition(updatedPosition))
+      // const updatedPosition = chess.applyMove(position, playerMove[0]);
+      store.dispatch(updatePosition(this.props.gameId, position, playerMove[0]))
 
-    } else {
-      store.dispatch(updatePosition(position))
     }
+    // else {
+    //   store.dispatch(revertPosition(position))
+    // }
   }
 
   showOptions = (start, data, position, addHighlights) => {

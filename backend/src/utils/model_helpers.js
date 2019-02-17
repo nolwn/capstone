@@ -19,11 +19,11 @@ const getAndCache = game_id => {
         console.log("caching...");
 
         const position = chess.fenToPosition(result["previous_fen"]);
-        redisAsPromised.set(GAME_ID + game_id, JSON.stringify(position));
-
-        return redisAsPromised.get(GAME_ID + game_id);
+        console.log("think", JSON.stringify(position))
+        return redisAsPromised.set(GAME_ID + game_id, JSON.stringify(position));
       }
     })
+    .then(result => redisAsPromised.get(GAME_ID + game_id))
     .then(result => JSON.parse(result))
     .then(cachedGame => {
       cachedGame.id = game_id;

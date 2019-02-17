@@ -1,4 +1,4 @@
-import { GET_GAMES } from "../actions/lobby";
+import { GET_GAMES, GET_GAME } from "../actions/lobby";
 
 const lobby = (state = [], action) => {
   switch (action.type) {

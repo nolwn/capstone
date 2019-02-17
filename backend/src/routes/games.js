@@ -12,8 +12,7 @@ router.post("/", isAuthenticated, controllers.createGame);
 router.patch("/:game_id/join", isAuthenticated, controllers.joinGame);
 router.delete("/:game_id", isAuthenticated, controllers.deleteGame);
 
-
-router.use("/turns", turnRoutes);
+router.use("/:game_id/turns", turnRoutes);
 router.use("/comments", commentRoutes);
 
 module.exports = router;
