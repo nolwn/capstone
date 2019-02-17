@@ -38,13 +38,24 @@ const getActiveGame = game_id => {
 
 // Start a new game, cache in Redis, return a new JWT token
 // TODO: add user who calls this route to game.
-const createGame = (game, claim) => {
+const createGame = ({ player_white, player_black }, claim) => {
+  if (!(player_white ? !player_black : player_black)) { // XOR
+    throw { status: 400, error: "Select one, and only one, color to play." }
+  }
+
+  const color = player_white ? "white" : "black";
+  let token;
+  let gameId;
+
   return knex("games")
-    .insert(game)
+    .insert({ player_white, player_black })
     .returning("*")
-    .then(storedGame => getAndCache(storedGame[0].id))
-    .then(cachedGame => addHostToGame(cachedGame, claim))
-    .then(cachedGame => generateNewToken(cachedGame, claim, "white"));
+    .then(storedGame => gameId = storedGame[0].id)
+    .then(_ => getAndCache(gameId))
+    .then(cachedGame => generateNewToken(cachedGame, claim, color))
+    .then(newToken => token = newToken)
+    .then(_ => addPlayerToRedis(gameId, claim.id, color))
+    .then(_ => token);
 }
 
 // Join a game, cache in Redis, return a new JWT token
@@ -64,15 +75,6 @@ const joinGame = (game_id, game, claim) => {
  *  HELPER FUNCTIONS  *
  ***********************/
 
-const addHostToGame = (game, host) => {
-  const newGame = { ...game };
-
-  newGame.host = host.username;
-  newGame.guest = null;
-
-  return newGame;
-}
-
 const startGame = (game_id) =>
   knex("games")
     .where({ id: game_id })
@@ -86,5 +88,9 @@ const generateNewToken = (game, claim, color) => {
 
   return newClaim;
 }
+
+const addPlayerToRedis = (gameId, playerId, color) =>
+  redisAsPromised.set(`${color}_game_id_${gameId}`, playerId)
+
 
 module.exports = { getActiveGame, getActiveGames, createGame, joinGame };
