@@ -11,7 +11,12 @@ const authentication = (state = unAuthenticated, action) => {
       return { claim: action.payload, pending: false };
 
     case SET_AUTHENTICATION:
-      return { claim: action.payload, pending: false };
+      return {
+        claim: action.payload.token,
+        id: action.payload.id,
+        username: action.payload.username,
+        pending: false
+      };
 
     default:
       return state;

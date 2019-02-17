@@ -6,8 +6,8 @@ const turnRoutes = require("./turns");
 const commentRoutes = require("./comments");
 
 
-router.get("/", isAuthenticated, controllers.getActiveGames);
-router.get("/:id", isAuthenticated, controllers.getActiveGame);
+router.get("/", isAuthenticated, controllers.getPendingGames);
+router.get("/:id", isAuthenticated, controllers.getPendingGame);
 router.post("/", isAuthenticated, controllers.createGame);
 router.patch("/:game_id/join", isAuthenticated, controllers.joinGame);
 router.delete("/:game_id", isAuthenticated, controllers.deleteGame);

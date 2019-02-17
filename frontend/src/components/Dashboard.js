@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 
 import Lobby from "./Lobby";
+import ActiveGames from "./ActiveGames";
 
 class Dashboard extends Component {
   pushHistory = path => {
@@ -15,6 +16,7 @@ class Dashboard extends Component {
         <Row>
           <Col sm="4">
             <h2>Your Games</h2>
+            <ActiveGames />
           </Col>
           <Col>
             <h2>Game Lobby</h2>

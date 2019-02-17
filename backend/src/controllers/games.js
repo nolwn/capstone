@@ -3,16 +3,16 @@ const { jwtAsPromised } = require("../utils");
 
 const secret = process.env.SECRET;
 
-const getActiveGame = (req, res, next) => {
-  return models.getActiveGame(req.params.id)
+const getPendingGame = (req, res, next) => {
+  return models.getPendingGame(req.params.id)
     .then(result =>
       res.status(200).send(result)
     )
     .catch(next);
 }
 
-const getActiveGames = (req, res, next) => {
-  return models.getActiveGames()
+const getPendingGames = (req, res, next) => {
+  return models.getPendingGames()
     .then(result =>
       res.status(200).send(result)
     )
@@ -20,7 +20,7 @@ const getActiveGames = (req, res, next) => {
 }
 
 const createGame = (req, res, next) => {
-  return models.createGame( req.body, req.claim)
+  return models.createGame(req.body, req.claim)
     .then(result => {
       if (!result) {
         throw { status: 400, message: "Game could not be created" };
@@ -53,4 +53,4 @@ const deleteGame = (req, res, next) => {
 
 }
 
-module.exports = { getActiveGames, getActiveGame, createGame, joinGame, deleteGame };
+module.exports = { getPendingGames, getPendingGame, createGame, joinGame, deleteGame };

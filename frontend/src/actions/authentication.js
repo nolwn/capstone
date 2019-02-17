@@ -4,9 +4,9 @@ const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 const JOIN_GAME = "JOIN_GAME";
 
 
-const setAuthentication = claim => ({
+const setAuthentication = authData => ({
   type: SET_AUTHENTICATION,
-  payload: claim
+  payload: authData
 });
 
 const joinGame = (game_id, color) =>

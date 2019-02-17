@@ -10,7 +10,7 @@ const GAME_ID = "game_id_";
  **********************/
 
 // Return games that have not started yet
-const getActiveGames = () => {
+const getPendingGames = () => {
   return knex("games")
     .leftJoin("users as playerWhite", "playerWhite.id", "games.player_white")
     .leftJoin("users as playerBlack", "playerBlack.id", "games.player_black")
@@ -23,7 +23,7 @@ const getActiveGames = () => {
 }
 
 // Return an active game state
-const getActiveGame = game_id => {
+const getPendingGame = game_id => {
   return redisAsPromised.get(GAME_ID + game_id)
     .then(result => {
       if(!result) {
@@ -40,7 +40,7 @@ const getActiveGame = game_id => {
 // TODO: add user who calls this route to game.
 const createGame = ({ player_white, player_black }, claim) => {
   if (!(player_white ? !player_black : player_black)) { // XOR
-    throw { status: 400, error: "Select one, and only one, color to play." }
+    throw { status: 400, message: "Select one, and only one, color to play." }
   }
 
   const color = player_white ? "white" : "black";
@@ -93,4 +93,4 @@ const addPlayerToRedis = (gameId, playerId, color) =>
   redisAsPromised.set(`${color}_game_id_${gameId}`, playerId)
 
 
-module.exports = { getActiveGame, getActiveGames, createGame, joinGame };
+module.exports = { getPendingGame, getPendingGames, createGame, joinGame };
