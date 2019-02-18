@@ -5,9 +5,7 @@ const knex = require("../../db");
 const GAME_ID = "game_id_";
 const TURN_ID = "_turn_id_";
 
-// TODO: do I need to retrieve the game from the db? Why? It's slower...
 const getAndCache = game_id => {
-  console.log(game_id);
   return knex("games")
     .where("games.id", game_id)
     .first()
@@ -16,19 +14,29 @@ const getAndCache = game_id => {
         throw { status: 404, message: "Game not found" };
 
       } else {
-        console.log("caching...");
-
         const position = chess.fenToPosition(result["previous_fen"]);
-        console.log("think", JSON.stringify(position))
-        return redisAsPromised.set(GAME_ID + game_id, JSON.stringify(position));
+        return redisAsPromised.hset(
+          GAME_ID + game_id,
+          "position",
+          JSON.stringify(position)
+        );
       }
     })
-    .then(result => redisAsPromised.get(GAME_ID + game_id))
+    .then(result => redisAsPromised.hget(GAME_ID + game_id, "position"))
     .then(result => JSON.parse(result))
-    .then(cachedGame => {
-      cachedGame.id = game_id;
-      return cachedGame;
-    });
+    .then(cachedGame => cacheGameState(game_id, cachedGame));
 }
 
-module.exports = { GAME_ID, TURN_ID, getAndCache };
+const cacheGameState = (gameId, cachedGame) => {
+  console.log(gameId, cachedGame)
+  const turn = cachedGame.turn;
+  const status = chess.getGameStatus(cachedGame);
+
+  redisAsPromised.hmset(GAME_ID + gameId, "turn", turn, "status", status);
+
+  console.log("cachedGame", cachedGame)
+
+  return cachedGame;
+}
+
+module.exports = { GAME_ID, TURN_ID, getAndCache, cacheGameState };

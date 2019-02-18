@@ -2,7 +2,7 @@ const models = require("../models/turns");
 
 const whiteTurn = (req, res, next) =>
   models.whiteTurn(req.params.game_id, req.body)
-    .then(state => res.status(201).send(state))
+    .then(state => res.status(201).json(state))
     .catch(next);
 
 

@@ -24,7 +24,7 @@ const getPendingGames = () => {
 
 // Return an active game state
 const getPendingGame = game_id => {
-  return redisAsPromised.get(GAME_ID + game_id)
+  return redisAsPromised.hget(GAME_ID + game_id, "position")
     .then(result => {
       if(!result) {
         return getAndCache(game_id);
@@ -90,7 +90,7 @@ const generateNewToken = (game, claim, color) => {
 }
 
 const addPlayerToRedis = (gameId, playerId, color) =>
-  redisAsPromised.set(`${color}_game_id_${gameId}`, playerId)
+  redisAsPromised.hset(GAME_ID + gameId, "white", playerId)
 
 
 module.exports = { getPendingGame, getPendingGames, createGame, joinGame };
