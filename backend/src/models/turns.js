@@ -11,10 +11,10 @@ const { GAME_ID } = require("../utils");
 const whiteTurn = (game_id, move) => {
   return redisAsPromised.hget(GAME_ID + game_id, "position")
     .then(result => JSON.parse(result))
-    .then(result => cacheGameState(game_id, result))
     .then(result => verifyOrFindGame(game_id, result))
     .then(result => validateMove(result, move))
-    .then(result => cacheNewState(game_id, result))
+    .then(result => cacheGameState(game_id, result))
+    .then(result => cacheNewPosition(game_id, result))
     .then(_ => cacheTurns(game_id, move));
 
 }
@@ -50,7 +50,7 @@ const validateMove = (state, move) => {
   }
 }
 
-const cacheNewState = (game_id, state) =>
+const cacheNewPosition = (game_id, state) =>
   redisAsPromised.hset(GAME_ID + game_id, "position", JSON.stringify(state))
 
 const cacheTurns = (game_id, move) =>
