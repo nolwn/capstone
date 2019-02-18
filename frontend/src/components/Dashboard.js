@@ -16,7 +16,7 @@ class Dashboard extends Component {
         <Row>
           <Col sm="4">
             <h2>Your Games</h2>
-            <ActiveGames />
+            <ActiveGames pushHistory={ this.pushHistory } />
           </Col>
           <Col>
             <h2>Game Lobby</h2>

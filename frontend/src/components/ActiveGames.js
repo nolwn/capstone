@@ -28,6 +28,8 @@ class ActiveGames extends Component {
                 "white" : "black"
               }
               status={ activeGame.status }
+              gameId={ activeGame.id }
+              pushHistory={ this.props.pushHistory }
             />
         );
         })
