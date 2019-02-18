@@ -29,10 +29,18 @@ const getAndCache = game_id => {
 
 const cacheGameState = (gameId, cachedGame) => {
   console.log(gameId, cachedGame)
-  const turn = cachedGame.turn;
+  const turn = cachedGame.turn.toLowerCase();
   const status = chess.getGameStatus(cachedGame);
 
-  return redisAsPromised.hmset(GAME_ID + gameId, "turn", turn, "status", status)
+  console.log(status);
+
+  return redisAsPromised.hmset(
+      GAME_ID + gameId,
+      "turn",
+      turn,
+      "status",
+      status
+    )
     .then(_ => cachedGame);
 }
 

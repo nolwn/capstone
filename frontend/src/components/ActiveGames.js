@@ -8,6 +8,7 @@ import { getActiveGames } from "../actions/activeGames";
 
 class ActiveGames extends Component {
   componentDidMount = () => {
+    console.log("mount!")
     this.props.getActiveGames(this.props.authentication.id);
   }
 
