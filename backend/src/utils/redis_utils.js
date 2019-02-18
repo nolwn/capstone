@@ -9,7 +9,8 @@ const redisAsPromised = {
   hset: promisify(client.hset).bind(client),
   hget: promisify(client.hget).bind(client),
   hmset: promisify(client.hmset).bind(client),
-  hmget: promisify(client.hmget).bind(client)
+  hmget: promisify(client.hmget).bind(client),
+  hgetall: promisify(client.hgetall).bind(client)
 };
 
 module.exports = { redisAsPromised };
