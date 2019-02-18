@@ -26,16 +26,15 @@ const blackTurn = move => {
 /*
  *  HELPER FUNCTIONS
  */
+ const verifyOrFindGame = (game_id, state) => {
+   if (!state) {
+     return getAndCache(game_id);
 
-const verifyOrFindGame = (game_id, state) => {
-  if (!state) {
-    return getAndCache(game_id);
-
-  } else {
-    console.log(state)
-    return state;
-  }
-}
+   } else {
+     console.log(state)
+     return state;
+   }
+ }
 
 const validateMove = (state, move) => {
   const position = state;

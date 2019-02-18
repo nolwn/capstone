@@ -21,7 +21,7 @@ class App extends Component {
       })
       .catch(err => {
         console.log(err)
-        this.props.setAuthentication(null)
+        this.props.setAuthentication({ id: null, username: null, token: null })
       });
   }
 
