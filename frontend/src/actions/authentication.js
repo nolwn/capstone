@@ -13,6 +13,7 @@ const joinGame = (game_id, color) =>
   dispatch =>
     request("patch", `/games/${game_id}/join`, { color })
       .then(({ data }) => {
+        localStorage.setItem("token", data)
         dispatch({ type: JOIN_GAME, payload: data });
       })
       .catch(err => console.error(err));

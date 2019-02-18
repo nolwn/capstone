@@ -15,7 +15,13 @@ const login = (req, res, next) => {
       const token = jwt.sign({
         id: user.id,
         username: user.username,
-        games: {}
+        games: user.games.reduce((acc, game) => {
+          acc[`game-${game.id}`] = game.player_white === user.id ?
+          "white" :
+          "black";
+
+          return acc;
+        }, {})
       },
       secret
       )

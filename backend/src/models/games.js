@@ -68,7 +68,7 @@ const joinGame = (game_id, game, claim) => {
     .returning("*")
     .then(storedGame => startGame(storedGame[0].id))
     .then(storedGame => getAndCache(storedGame[0].id))
-    .then(cachedGame => generateNewToken(cachedGame, claim, game.color));
+    .then(cachedGame => generateNewToken(game_id, claim, game.color));
 }
 
 /***********************
@@ -81,10 +81,10 @@ const startGame = (game_id) =>
     .update("started_at", knex.fn.now())
     .returning("*");
 
-const generateNewToken = (game, claim, color) => {
+const generateNewToken = (game_id, claim, color) => {
   const newClaim = { ...claim };
 
-  newClaim.games[`game-${game.id}`] = color;
+  newClaim.games[`game-${game_id}`] = color;
 
   return newClaim;
 }
