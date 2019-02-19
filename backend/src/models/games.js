@@ -30,7 +30,6 @@ const getPendingGame = game_id => {
         return getAndCache(game_id);
 
       } else {
-        console.log("game already cached!");
         return JSON.parse(result);
       }
   });

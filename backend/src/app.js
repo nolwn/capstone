@@ -6,6 +6,8 @@ const morgan = require("morgan");
 
 const port = process.env.PORT || 3000;
 const app = express();
+const http = require("http").Server(app)
+const io = require("socket.io")(http)
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
@@ -46,4 +48,4 @@ app.use((err, req, res, next) => {
   res.status(error.status).send(error);
 });
 
-app.listen(port, () => console.log("Howdy from port ", port));
+http.listen(port, () => console.log("Howdy from port ", port));

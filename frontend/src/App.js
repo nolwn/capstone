@@ -38,9 +38,11 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = ({ authentication }) => ({ authentication });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     setAuthentication
   }, dispatch)
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

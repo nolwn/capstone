@@ -22,8 +22,6 @@ const getGamesStatusFromRedis = games => {
 
   return Promise.all(redisPromises)
     .then(statuses => {
-      console.log(statuses)
-
       return games.map((game, idx) => {
         if (statuses[idx]) game.status = statuses[idx];
         return game;

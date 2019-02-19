@@ -31,7 +31,6 @@ const blackTurn = move => {
      return getAndCache(game_id);
 
    } else {
-     console.log(state)
      return state;
    }
  }

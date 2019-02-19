@@ -4,18 +4,17 @@ import chess from "chess-rules";
 const UPDATE_POSITION = "UPDATE_POSITION";
 const GET_GAME = "GET_GAME";
 
-const updatePosition = (gameId, position, move) => {
+const updatePosition = (gameId, position, move, socket) => {
   console.log("move", move)
     return dispatch =>
       request("post", "/games/" + gameId + "/turns/", move)
-      .then(_ => {
-        console.log(chess.applyMove(position, move))
-        dispatch ({ type: UPDATE_POSITION, payload: chess.applyMove(position, move) })
-      })
-      .catch(err => {
-        console.log("this didn't work")
-        console.error(err);
-      })
+        .then(_ => {
+          dispatch ({ type: UPDATE_POSITION, payload: chess.applyMove(position, move) })
+        })
+        .catch(err => {
+          console.log("this didn't work")
+          console.error(err);
+        })
 }
 
 const getGame = gameId =>

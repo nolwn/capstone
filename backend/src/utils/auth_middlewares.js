@@ -6,8 +6,6 @@ const secret = process.env.SECRET;
 
 const isAuthenticated = (req, res, next) => {
   if (!req.headers.authorization) {
-    console.log("no headers")
-
     next({ status: 400, message: "Bad Request" });
 
   } else {
@@ -15,15 +13,12 @@ const isAuthenticated = (req, res, next) => {
 
     return jwtAsPromised.verify(token, secret)
       .then(result => {
-        console.log(result)
+
         req.claim = result;
 
         next();
       })
-      .catch(err => {
-        console.log("err")
-        next(err)
-      });
+      .catch(next);
   }
 };
 
@@ -34,8 +29,6 @@ const isPlayer = async (req, res, next) => {
   return redisAsPromised.hmget(GAME_ID + gameId, "white", "black")
     .then(result => verifyOrCache(gameId, result))
     .then(players => {
-      console.log(userId, players)
-      console.log(players.findIndex(id => userId == id) > -1)
       if (!(players.findIndex(id => userId == id) > -1)) {
         next({ status: 400, message: "Unauthorized" });
       }
@@ -58,18 +51,28 @@ const isPlayerToken = (req, res, next) => {
 const isTurn = (req, res, next) => {
   const gameId = req.params.game_id;
   const userColor = req.claim.games[`game-${gameId}`][0]
-  console.log(req.claim);
 
   return getGameTurn(gameId)
     .then(gameTurn => {
       if (gameTurn !== userColor) {
-        console.log(gameTurn, userColor)
         throw { status: 400, message: "Unauthorized" };
       }
     })
     .then(next)
     .catch(next);
 };
+
+/***************
+ *  SOCKET IO  *
+ ***************/
+
+const socketAuthenticated = async (socket, next) => {
+  
+}
+
+/***********************
+ *  HELPERS FUNCTIONS  *
+ ***********************/
 
 const verifyOrCache = (gameId, players) => {
   if (players[0] !== null && players[1] !== null) {
