@@ -31,6 +31,7 @@ class Pieces extends Component {
 
   getGameUpdate = () => {
       this.props.getGame(this.props.gameId);
+      console.log("fired a getGame")
   }
 
   componentDidMount = () => {
@@ -75,6 +76,7 @@ class Pieces extends Component {
       )
     }
     { this.state.highlights }
+    { console.log(socket) }
     </div>
 }
 

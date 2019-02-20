@@ -6,7 +6,7 @@ const io = require("socket.io")(http)
 
 io.on("connection", socket => {
   socket.on("subscribe", gameId => {
-    const room = `Game 8`;
+    const room = `Game ${gameId}`;
     console.log("joining " + room);
     socket.join(room);
   })
