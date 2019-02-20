@@ -40,7 +40,6 @@ class Piece extends Component{
     if (playerMove.length) {
       // const updatedPosition = chess.applyMove(position, playerMove[0]);
       store.dispatch(updatePosition(this.props.gameId, position, playerMove[0]))
-
     }
     // else {
     //   store.dispatch(revertPosition(position))
@@ -51,8 +50,9 @@ class Piece extends Component{
     const moveIndex = this.getIndexFromPos({ x: data.lastX, y: data.lastY });
     const legalMoves = chess.getAvailableMoves(position);
     const possibleMoves = legalMoves.reduce((acc, move) => {
-
-      return [ ...acc, move.src === start ? <Highlight pos={ this.getPosFromIndex(move.dst) } /> : null ]
+      return [ ...acc, move.src === start ?
+        <Highlight pos={ this.getPosFromIndex(move.dst) } /> :
+        null ]
     }, []
     );
 

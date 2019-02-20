@@ -14,6 +14,8 @@ class ActiveGames extends Component {
     socket.on("update", e => {
       this.props.getActiveGames(this.props.authentication.id);
     });
+    socket.on("Lobby Update", e =>
+      this.props.getActiveGames(this.props.authentication.id))
   }
 
   render = () =>

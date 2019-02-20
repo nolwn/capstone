@@ -37,7 +37,10 @@ class Lobby extends Component {
         </thead>
         <tbody>
           {
-            this.props.lobby.map(game => {
+            this.props.lobby.filter(game =>
+              game.playerWhite !== this.props.authentication.username &&
+              game.playerBlack !== this.props.authentication.username
+            ).map(game => {
               return <LobbyGame
                 key={ game.id }
                 pushHistory={ this.props.pushHistory }
@@ -53,8 +56,6 @@ class Lobby extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getGames }, dispatch);
 
-const mapStateToProps = state => {
-  return { lobby: state.lobby }
-}
+const mapStateToProps = ({ lobby, authentication }) => ({ lobby, authentication })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lobby);
