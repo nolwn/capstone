@@ -1,4 +1,5 @@
 import axios from "axios";
+import io from "socket.io-client";
 
 const server = process.env.REACT_APP_CHESS;
 
@@ -14,4 +15,8 @@ const request = (method, path, data) => {
   })
 }
 
-export { request };
+const socket = io(process.env.REACT_APP_CHESS);
+
+socket.on("update", e => console.log("🕹"));
+
+export { request, socket };

@@ -3,15 +3,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-
 const port = process.env.PORT || 3000;
-const app = express();
-const http = require("http").Server(app)
-const io = require("socket.io")(http)
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
+
+const { app, http } = require("./utils");
+
 
 const authRoutes = require("./routes/auth");
 const gameRoutes = require("./routes/games");

@@ -1,5 +1,6 @@
 const chess = require("chess-rules");
 const knex = require("../../db");
+const { io } = require("../utils");
 
 const {
   redisAsPromised,
@@ -15,8 +16,8 @@ const whiteTurn = (game_id, move) => {
     .then(result => validateMove(result, move))
     .then(result => cacheGameState(game_id, result))
     .then(result => cacheNewPosition(game_id, result))
+    .then(_ => emitUpdate(game_id))
     .then(_ => cacheTurns(game_id, move));
-
 }
 
 const blackTurn = move => {
@@ -26,14 +27,22 @@ const blackTurn = move => {
 /*
  *  HELPER FUNCTIONS
  */
- const verifyOrFindGame = (game_id, state) => {
-   if (!state) {
-     return getAndCache(game_id);
 
-   } else {
-     return state;
-   }
+const emitUpdate = gameId => {
+  const room = `Game ${gameId}`;
+
+  console.log("Update sent to " + room);
+  io.to(room).emit("update", "🕹");
+}
+
+const verifyOrFindGame = (game_id, state) => {
+ if (!state) {
+   return getAndCache(game_id);
+
+ } else {
+   return state;
  }
+}
 
 const validateMove = (state, move) => {
   const position = state;

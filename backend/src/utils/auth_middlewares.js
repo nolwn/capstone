@@ -5,6 +5,7 @@ const { GAME_ID, getAndCache, getGameTurn } = require("./model_helpers");
 const secret = process.env.SECRET;
 
 const isAuthenticated = (req, res, next) => {
+  console.log(secret)
   if (!req.headers.authorization) {
     next({ status: 400, message: "Bad Request" });
 
@@ -67,7 +68,7 @@ const isTurn = (req, res, next) => {
  ***************/
 
 const socketAuthenticated = async (socket, next) => {
-  
+
 }
 
 /***********************
