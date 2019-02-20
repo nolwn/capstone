@@ -8,7 +8,7 @@ const unAuthenticated = {
 const authentication = (state = unAuthenticated, action) => {
   switch (action.type) {
     case JOIN_GAME:
-      return { claim: action.payload, pending: false };
+      return { ...state, claim: action.payload, pending: false };
 
     case SET_AUTHENTICATION:
       return {

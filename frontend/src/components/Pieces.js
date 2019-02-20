@@ -30,26 +30,20 @@ class Pieces extends Component {
   }
 
   getGameUpdate = () => {
-      console.log(this.props);
-
       this.props.getGame(this.props.gameId);
   }
 
   componentDidMount = () => {
     socket.emit("subscribe", this.props.gameId);
-    console.log(socket)
 
     socket.on("update", this.getGameUpdate);
 
   }
 
   componentWillUnmount = () => {
-    console.log("unmount!!");
-    console.log("before", socket)
     socket.removeListener("update", this.getGameUpdate)
     // socket.removeAllListeners()
 
-    console.log("after", socket)
   }
 
   addHighlights = highlights => {

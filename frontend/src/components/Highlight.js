@@ -11,7 +11,6 @@ const highlightStyle = {
 }
 
 const Highlight = props => {
-  console.log(props.pos)
   return <div style={{ ...highlightStyle, transform: `translate(${props.pos.x}px, ${props.pos.y}px )` }}>
 
   </div>

@@ -14,7 +14,6 @@ const JoinButton = props =>
   <Button
     onClick= { e => {
       handleJoin(props.game, props.color)
-      console.log(props.game);
       socket.emit("subscribe", props.game)
       props.pushHistory(`/game/${props.game}`);
     }

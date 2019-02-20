@@ -9,6 +9,7 @@ import { socket } from "../utils";
 
 class ActiveGames extends Component {
   componentDidMount = () => {
+    console.log(this.props)
     this.props.getActiveGames(this.props.authentication.id);
     socket.on("update", e => {
       this.props.getActiveGames(this.props.authentication.id);

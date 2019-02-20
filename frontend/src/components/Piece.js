@@ -50,7 +50,6 @@ class Piece extends Component{
   showOptions = (start, data, position, addHighlights) => {
     const moveIndex = this.getIndexFromPos({ x: data.lastX, y: data.lastY });
     const legalMoves = chess.getAvailableMoves(position);
-    console.log(legalMoves);
     const possibleMoves = legalMoves.reduce((acc, move) => {
 
       return [ ...acc, move.src === start ? <Highlight pos={ this.getPosFromIndex(move.dst) } /> : null ]
