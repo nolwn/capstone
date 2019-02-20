@@ -13,6 +13,7 @@ let highlights = []
 
 class Game extends Component {
   componentDidMount = () => {
+
     this.props.getGame(this.props.match.params.game_id);
   }
 

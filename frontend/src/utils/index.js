@@ -17,6 +17,4 @@ const request = (method, path, data) => {
 
 const socket = io(process.env.REACT_APP_CHESS);
 
-socket.on("update", e => console.log("🕹"));
-
 export { request, socket };

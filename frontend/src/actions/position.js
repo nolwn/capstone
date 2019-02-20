@@ -4,7 +4,7 @@ import chess from "chess-rules";
 const UPDATE_POSITION = "UPDATE_POSITION";
 const GET_GAME = "GET_GAME";
 
-const updatePosition = (gameId, position, move, socket) => {
+const updatePosition = (gameId, position, move) => {
   console.log("move", move)
     return dispatch =>
       request("post", "/games/" + gameId + "/turns/", move)

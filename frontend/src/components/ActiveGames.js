@@ -5,11 +5,14 @@ import { connect } from "react-redux";
 
 import ActiveGame from "./ActiveGame";
 import { getActiveGames } from "../actions/activeGames";
+import { socket } from "../utils";
 
 class ActiveGames extends Component {
   componentDidMount = () => {
-    console.log("mount!")
     this.props.getActiveGames(this.props.authentication.id);
+    socket.on("update", e => {
+      this.props.getActiveGames(this.props.authentication.id);
+    });
   }
 
   render = () =>

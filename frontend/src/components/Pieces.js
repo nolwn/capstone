@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import chess from "chess-rules";
 
 import Highlight from "./Highlight";
 import Piece from "./Piece";
+
+import { getGame } from "../actions/position";
+import { socket } from "../utils";
 
 const piecesStyle = {
   position: "fixed",
@@ -23,6 +27,29 @@ class Pieces extends Component {
     this.state = {
       highlights: []
     }
+  }
+
+  getGameUpdate = () => {
+      console.log(this.props);
+
+      this.props.getGame(this.props.gameId);
+  }
+
+  componentDidMount = () => {
+    socket.emit("subscribe", this.props.gameId);
+    console.log(socket)
+
+    socket.on("update", this.getGameUpdate);
+
+  }
+
+  componentWillUnmount = () => {
+    console.log("unmount!!");
+    console.log("before", socket)
+    socket.removeListener("update", this.getGameUpdate)
+    // socket.removeAllListeners()
+
+    console.log("after", socket)
   }
 
   addHighlights = highlights => {
@@ -59,4 +86,7 @@ class Pieces extends Component {
 
 const mapStateToProps = ({ position }) => ({ position });
 
-export default connect(mapStateToProps)(Pieces);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getGame }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pieces);

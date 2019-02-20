@@ -16,8 +16,6 @@ import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    // const thing = io(process.env.REACT_APP_CHESS);
-    // socket.emit("message", "message");
     request("get", "/auth/token")
       .then(response => {
         this.props.setAuthentication(response.data)
