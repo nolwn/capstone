@@ -4,7 +4,6 @@ import JoinButton from "./JoinButton";
 
 const LobbyGame = props =>
   <tr>
-    <td>{ props.game.id }</td>
     <td> { props.game.playerWhite ?
         props.game.playerWhite :
         <JoinButton

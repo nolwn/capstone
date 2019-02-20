@@ -20,6 +20,18 @@ const getPendingGames = (req, res, next) => {
 }
 
 const createGame = (req, res, next) => {
+  console.log(req.body);
+  if (!(req.body.player_white ?
+        !req.body.player_black :
+        req.body.player_black)) { // XOR
+    throw { status: 400, message: "Select one, and only one, color to play." }
+  }
+
+  const userId = req.claim.id;
+  const addedUser = req.body.player_white ?
+    req.body.player_white :
+    req.body.player_black;
+
   return models.createGame(req.body, req.claim)
     .then(result => {
       if (!result) {

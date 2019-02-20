@@ -1,7 +1,7 @@
 const redis = require("redis");
 
 const knex = require("../../db");
-const { jwtAsPromised, redisAsPromised, getAndCache } = require("../utils");
+const { jwtAsPromised, redisAsPromised, getAndCache, io } = require("../utils");
 
 const GAME_ID = "game_id_";
 
@@ -38,10 +38,6 @@ const getPendingGame = game_id => {
 // Start a new game, cache in Redis, return a new JWT token
 // TODO: add user who calls this route to game.
 const createGame = ({ player_white, player_black }, claim) => {
-  if (!(player_white ? !player_black : player_black)) { // XOR
-    throw { status: 400, message: "Select one, and only one, color to play." }
-  }
-
   const color = player_white ? "white" : "black";
   let token;
   let gameId;
@@ -54,6 +50,7 @@ const createGame = ({ player_white, player_black }, claim) => {
     .then(cachedGame => generateNewToken(cachedGame, claim, color))
     .then(newToken => token = newToken)
     .then(_ => addPlayerToRedis(gameId, claim.id, color))
+    .then(_ => emitUpdate())
     .then(_ => token);
 }
 
@@ -90,6 +87,11 @@ const generateNewToken = (game_id, claim, color) => {
 
 const addPlayerToRedis = (gameId, playerId, color) =>
   redisAsPromised.hset(GAME_ID + gameId, "white", playerId)
+
+const emitUpdate = () => {
+  console.log("Emit to lobby!");
+  io.to("Lobby").emit("Lobby Update", "")
+}
 
 
 module.exports = { getPendingGame, getPendingGames, createGame, joinGame };

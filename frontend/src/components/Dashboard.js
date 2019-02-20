@@ -3,6 +3,7 @@ import { Row, Col } from "reactstrap";
 
 import Lobby from "./Lobby";
 import ActiveGames from "./ActiveGames";
+import CreateGame from "./CreateGame";
 
 class Dashboard extends Component {
   pushHistory = path => {

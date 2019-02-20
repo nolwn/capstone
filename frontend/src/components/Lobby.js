@@ -5,19 +5,34 @@ import { connect } from "react-redux";
 
 import { getGames } from "../actions/lobby";
 import LobbyGame from "./LobbyGame";
+import CreateGame from "./CreateGame";
+import { socket } from "../utils";
 
 class Lobby extends Component {
-  componentDidMount = () =>
+  componentDidMount = () => {
     this.props.getGames();
+    socket.emit("Join Lobby", "");
+    socket.on("Lobby Update", _ => {
+      console.log("running update")
+      this.props.getGames()
+    });
+  }
+
+  componentWillUnmount = () => {
+
+  }
 
   render = () =>
     <CardBody>
       <Table>
         <thead>
+            <CreateGame />
           <tr>
-            <td>Game ID</td>
-            <td>White</td>
-            <td>Black</td>
+            <td style={{ "border": "none" }}>
+              <h4>
+                Join a Game
+              </h4>
+            </td>
           </tr>
         </thead>
         <tbody>
