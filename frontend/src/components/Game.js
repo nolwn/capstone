@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 import Board from "./Board";
 import Pieces from "./Pieces";
+import Captives from "./Captives";
 import { request } from "../utils";
 import { getGame } from "../actions/game";
 
@@ -18,9 +19,14 @@ class Game extends Component {
   }
 
   render = () =>
-    <Container>
-      <Pieces gameId={ this.props.match.params.game_id } />
-      <Board side="white"/>
+    <Container style={{ display: "flex" }}>
+      <div>
+        <Pieces gameId={ this.props.match.params.game_id } />
+        <Board side="white"/>
+      </div>
+      <div>
+        <Captives />
+      </div>
     </Container>
 
 }

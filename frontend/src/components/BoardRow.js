@@ -3,8 +3,9 @@ import React from "react";
 import BoardCol from "./BoardCol";
 
 const boardRowStyle = {
-  width: "600px",
-  display: "flex"
+  width: 64 + "px",
+  margin: "none",
+  // display: "flex"
 }
 
 const BoardRow = props => {

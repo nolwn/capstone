@@ -5,11 +5,15 @@ import BoardRow from "./BoardRow";
 const highlights = [];
 
 const Board = props =>
-  [ ..."12345678" ]
+<div style={{ width: 64 * 8 + "px", display: "flex" }}>
+  {
+    [ ..."12345678" ]
     .map((row, idx) =>
-      row % 2 === 0 ?
-      <BoardRow key={ idx } dark={ true } /> :
+    row % 2 === 0 ?
+    <BoardRow key={ idx } dark={ true } /> :
       <BoardRow key={ idx } dark={ false } />
     )
+  }
+</div>
 
 export default Board;

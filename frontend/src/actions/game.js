@@ -3,6 +3,7 @@ import chess from "chess-rules";
 
 const UPDATE_POSITION = "UPDATE_POSITION";
 const GET_GAME = "GET_GAME";
+const DESTROY_GAME = "DESTROY_GAME";
 
 const updatePosition = (gameId, position, move) => {
     return dispatch =>
@@ -24,7 +25,17 @@ const getGame = gameId =>
       })
       .catch(err => console.error(err));
 
+const destroyGame = _ => ({ type: DESTROY_GAME })
+
 const revertPosition = position =>
   ({ type: UPDATE_POSITION, payload: position })
 
-export { UPDATE_POSITION, GET_GAME, getGame, updatePosition, revertPosition };
+export {
+  UPDATE_POSITION,
+  DESTROY_GAME,
+  GET_GAME,
+  getGame,
+  updatePosition,
+  destroyGame,
+  revertPosition
+};

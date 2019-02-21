@@ -65,4 +65,10 @@ const deleteGame = (req, res, next) => {
 
 }
 
-module.exports = { getPendingGames, getPendingGame, createGame, joinGame, deleteGame };
+module.exports = {
+  getPendingGames,
+  getPendingGame,
+  createGame,
+  joinGame,
+  deleteGame
+};

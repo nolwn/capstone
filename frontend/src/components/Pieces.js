@@ -6,14 +6,14 @@ import chess from "chess-rules";
 import Highlight from "./Highlight";
 import Piece from "./Piece";
 
-import { getGame } from "../actions/game";
+import { getGame, destroyGame } from "../actions/game";
 import { socket } from "../utils";
 
 const piecesStyle = {
-  position: "fixed",
+  position: "absolute",
   display: "block",
-  height: "75px",
-  width: "75px"
+  height: "64px",
+  width: "64px"
 }
 
 
@@ -36,13 +36,13 @@ class Pieces extends Component {
 
   componentDidMount = () => {
     socket.emit("subscribe", this.props.gameId);
-
     socket.on("update", this.getGameUpdate);
-
   }
 
   componentWillUnmount = () => {
-    socket.removeListener("update", this.getGameUpdate)
+    socket.removeListener("update", this.getGameUpdate);
+    this.props.destroyGame()
+    console.log("component unmounting...");
     // socket.removeAllListeners()
 
   }
@@ -70,6 +70,7 @@ class Pieces extends Component {
               position={ this.props.game.position }
               addHighlights={ this.addHighlights }
               removeHighlights={ this.removeHighlights }
+              flip={ this.props.authentication.id == this.props.game.black }
             />
         ] :
           acc;
@@ -82,9 +83,9 @@ class Pieces extends Component {
   }
 }
 
-const mapStateToProps = ({ game }) => ({ game });
+const mapStateToProps = ({ authentication, game }) => ({ authentication, game });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getGame }, dispatch);
+  bindActionCreators({ getGame, destroyGame }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pieces);
