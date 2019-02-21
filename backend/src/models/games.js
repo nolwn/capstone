@@ -24,13 +24,17 @@ const getPendingGames = () => {
 
 // Return an active game state
 const getPendingGame = game_id => {
-  return redisAsPromised.hget(GAME_ID + game_id, "position")
+  return redisAsPromised.hgetall(GAME_ID + game_id)
     .then(result => {
       if(!result) {
-        return getAndCache(game_id);
-
+        return getAndCache(game_id)
+          .then(result =>
+            redisAsPromised.hgetall(GAME_ID + game_id)
+          )
+          .then(result =>
+            ({ ...result, position: JSON.parse(result.position) }));
       } else {
-        return JSON.parse(result);
+        return { ...result, position: JSON.parse(result.position)};
       }
   });
 };

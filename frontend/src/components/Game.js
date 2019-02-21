@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Board from "./Board";
 import Pieces from "./Pieces";
 import { request } from "../utils";
-import { getGame } from "../actions/position";
+import { getGame } from "../actions/game";
 
 let highlights = []
 

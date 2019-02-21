@@ -5,13 +5,13 @@ import logger from "redux-logger";
 import activeGames from "./reducers/activeGames"
 import authentication from "./reducers/authentication";
 import lobby from "./reducers/lobby";
-import position from "./reducers/position";
+import game from "./reducers/game";
 
 const reducers = combineReducers({
   activeGames,
   authentication,
   lobby,
-  position
+  game
 });
 
 export default createStore(reducers, applyMiddleware(thunk, logger));

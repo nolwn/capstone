@@ -18,9 +18,10 @@ const updatePosition = (gameId, position, move) => {
 const getGame = gameId =>
   dispatch =>
     request("get", "/games/" + gameId)
-      .then(({ data }) =>
+      .then(({ data }) =>{
+        console.log("ACTIONS", data)
         dispatch({ type: GET_GAME, payload: data })
-      )
+      })
       .catch(err => console.error(err));
 
 const revertPosition = position =>

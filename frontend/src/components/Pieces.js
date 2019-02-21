@@ -6,7 +6,7 @@ import chess from "chess-rules";
 import Highlight from "./Highlight";
 import Piece from "./Piece";
 
-import { getGame } from "../actions/position";
+import { getGame } from "../actions/game";
 import { socket } from "../utils";
 
 const piecesStyle = {
@@ -55,10 +55,11 @@ class Pieces extends Component {
     this.setState({ ...this.state, highlights: [] });
   }
 
-  render = () =>
-    <div style={ piecesStyle }>
+  render = () =>{
+    console.log(this.props)
+    return <div style={ piecesStyle }>
       {
-        this.props.position.board.reduce((acc, cur, idx) => {
+        this.props.game.position.board.reduce((acc, cur, idx) => {
           return cur ? [ ...acc,
             <Piece
               key={ idx }
@@ -66,7 +67,7 @@ class Pieces extends Component {
               color={ cur.side }
               piece={ cur.type }
               index={ idx }
-              position={ this.props.position }
+              position={ this.props.game.position }
               addHighlights={ this.addHighlights }
               removeHighlights={ this.removeHighlights }
             />
@@ -78,9 +79,10 @@ class Pieces extends Component {
     { this.state.highlights }
     { console.log(socket) }
     </div>
+  }
 }
 
-const mapStateToProps = ({ position }) => ({ position });
+const mapStateToProps = ({ game }) => ({ game });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getGame }, dispatch);

@@ -4,7 +4,7 @@ import chess from "chess-rules";
 
 import Highlight from "./Highlight";
 import store from "../store";
-import { updatePosition, revertPosition } from "../actions/position";
+import { updatePosition, revertPosition } from "../actions/game";
 
 class Piece extends Component{
   constructor(props) {
