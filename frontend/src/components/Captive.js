@@ -2,7 +2,7 @@ import React from "react";
 
 const captiveStyle = {
     position: "relative",
-    height: 64 * .55 + "px"
+    height: 35 + "px"
 }
 
 const Captive = props =>
@@ -14,7 +14,7 @@ const Captive = props =>
       src={ `/img/${props.color}-${props.piece}.svg` }
       />
   </span>
-  <span>x1</span>
+  <span>x{ props.qty }</span>
 </div>
 
 export default Captive;
