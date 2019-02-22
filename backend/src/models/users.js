@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt")
+
 const knex = require("../../db");
 const { redisAsPromised, GAME_ID } = require("../utils");
 
@@ -17,8 +19,38 @@ const getUserGames = userId =>
     .then(games => getGamesStatusFromFens(games))
     .then(games => getGamesStatusFromRedis(games));
 
+const createUser = body => {
+  if (!(body.username && body.password )) {
+    throw { error: 400, message: "Supply both a username and password." }
+  }
+
+  return knex("users")
+    .where({ username: body.username })
+    .then(([ user ]) => {
+      if (user) {
+        throw { error: 400, message: "Name already taken." }
+      } else {
+        return bcrypt.hash(body.password, 10)
+      }
+    })
+    .then(hash =>
+      knex("users")
+        .insert({ ...body, password: hash })
+        .returning("*")
+    )
+    .then(([ newUser ]) => {
+      delete newUser.password;
+      return newUser;
+    });
+}
+
+/**********************
+ *  HELPER FUNCTIONS  *
+ **********************/
+
 const getGamesStatusFromRedis = games => {
-  const redisPromises = games.map(game => redisAsPromised.hget(GAME_ID + game.id, "turn"));
+  const redisPromises = games.map(game =>
+    redisAsPromised.hget(GAME_ID + game.id, "turn"));
 
   return Promise.all(redisPromises)
     .then(statuses => {
@@ -45,4 +77,4 @@ const gameStatusFromFen = fenString => {
 }
 
 
-module.exports = { getUserGames }
+module.exports = { getUserGames, createUser }
