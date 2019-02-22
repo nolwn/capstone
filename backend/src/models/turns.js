@@ -16,8 +16,9 @@ const whiteTurn = (game_id, move) => {
     .then(result => validateMove(result, move))
     .then(result => cacheGameState(game_id, result))
     .then(result => cacheNewPosition(game_id, result))
-    .then(_ => emitUpdate(game_id))
-    .then(_ => cacheTurns(game_id, move));
+    .then(_ => cacheTurns(game_id, move))
+    .then(_ => detectFinished(game_id))
+    .then(_ => emitUpdate(game_id));
 }
 
 const blackTurn = move => {
@@ -28,11 +29,72 @@ const blackTurn = move => {
  *  HELPER FUNCTIONS
  */
 
+const detectFinished = (gameId) => {
+  return redisAsPromised.hget(GAME_ID + gameId, "position")
+    .then(position => {
+      position = JSON.parse(position);
+      if (chess.getGameStatus(position) !== "OPEN") {
+        return storeGame(gameId, position)
+        .then(_ => flushGameFromRedis(gameId))
+      }
+    })
+}
+
 const emitUpdate = gameId => {
   const room = `Game ${gameId}`;
 
   console.log("Update sent to " + room);
   io.to(room).emit("update", "🕹");
+}
+
+const storeGame = (gameId, position) => {
+  return knex("games")
+    .insert({
+      previous_fen: chess.positionToFen(position),
+      winner: chess.getGameStatus(position),
+      ended_at: new Date().toISOString()
+    })
+    .then(_ => {
+      return redisAsPromised.hget(GAME_ID + gameId, "turns")
+        .then(turns => {
+          const turnsToInsert = [];
+          let replay = chess.getInitialPosition();
+
+          turns = JSON.parse(turns);
+
+          for (let i = 0; i < turns.length; i += 2) {
+            console.log(i, turns[i], turns[i + 1]);
+            let turnToInsert = {
+              game_id: gameId,
+              turn: Math.floor(i / 2 + 1),
+              pgn_white: chess.moveToPgn(replay, turns[i]),
+            }
+
+            replay = chess.applyMove(replay, turns[i]);
+
+            let blackTurn = "...";
+
+            if (turns[i + 1]) {
+              blackTurn = chess.moveToPgn(replay, turns[i + 1])
+
+              replay = chess.applyMove(replay, turns[i + 1]);
+            }
+
+            turnToInsert.pgn_black = blackTurn;
+
+            console.log("inserting", turnToInsert);
+
+            turnsToInsert.push(turnToInsert);
+          }
+
+          return knex("turns")
+            .insert(turnsToInsert)
+        });
+    });
+}
+
+const flushGameFromRedis = gameId => {
+  return redisAsPromised.del(GAME_ID + gameId);
 }
 
 const verifyOrFindGame = (game_id, state) => {
