@@ -15,9 +15,11 @@ class Piece extends Component{
       position: "absolute",
       top: 64 * 7 + "px"
     };
+    this.opponent = this.props.flip ? "W" : "B";
   }
 
   handleDrag = (start, data, position, removeHighlights) => {
+    console.log("handleDrag")
     const moveIndex = getIndexFromPos(
       { x: data.lastX, y: data.lastY },
       this.props.flip
@@ -31,12 +33,13 @@ class Piece extends Component{
     removeHighlights();
 
     if (playerMove.length) {
+      this.starting.x = data.lastX;
+      this.starting.y = data.lastY;
       // const updatedPosition = chess.applyMove(position, playerMove[0]);
       store.dispatch(updatePosition(this.props.gameId, position, playerMove[0]))
+    } else {
+      store.dispatch(revertPosition(position))
     }
-    // else {
-    //   store.dispatch(revertPosition(position))
-    // }
   }
 
   showOptions = (start, data, position, addHighlights) => {
@@ -62,6 +65,7 @@ class Piece extends Component{
     <Draggable
       grid={ [64, 64] }
       position={ this.starting }
+      disabled={ this.props.color === this.opponent }
       bounds={{ left: 0, top: -64 * 7, right: 64 * 7, bottom: 0 }}
       onStart={
         (e, data) =>

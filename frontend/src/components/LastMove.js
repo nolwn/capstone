@@ -1,11 +1,9 @@
 import React from "react";
 
 const lastMoveStyle = {
-  width: 64 / 3 + "px",
-  height: 64 / 3 + "px",
-  margin: 64 / 3 + "px",
-  background: "rgba(75, 90, 255, .5)",
-  borderRadius: "25px",
+  width: 64 + "px",
+  height: 64 + "px",
+  border: "6px solid #3399ee",
   position: "absolute",
   top: 64 * 7 + "px"
 }

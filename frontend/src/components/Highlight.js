@@ -4,10 +4,7 @@ const highlightStyle = {
   width: 64 / 3 + "px",
   height: 64 / 3 + "px",
   margin: 64 / 3 + "px",
-  borderLeft: "3px solid #aeaeae",
-  borderRight: "3px solid #aeaeae",
-  borderTop: "3px solid white",
-  borderBottom: "3px solid white",
+  background: "#3399ee",
   borderRadius: "25px",
   position: "absolute",
   top: 64 * 7 + "px"
