@@ -49,11 +49,12 @@ const emitUpdate = gameId => {
 
 const storeGame = (gameId, position) => {
   return knex("games")
-    .insert({
+    .update({
       previous_fen: chess.positionToFen(position),
       winner: chess.getGameStatus(position),
       ended_at: new Date().toISOString()
     })
+    .where("id", gameId)
     .then(_ => {
       return redisAsPromised.hget(GAME_ID + gameId, "turns")
         .then(turns => {
