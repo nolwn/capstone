@@ -68,12 +68,13 @@ const joinGame = (game_id, game, claim) => {
     .returning("*")
     .then(storedGame => startGame(storedGame[0].id))
     .then(storedGame => getAndCache(storedGame[0].id))
-    .then(cachedGame => generateNewToken(game_id, claim, game.color));
+    .then(_ => emitUpdate())
+    .then(_ => generateNewToken(game_id, claim, game.color));
 }
 
-/***********************
+/**********************
  *  HELPER FUNCTIONS  *
- ***********************/
+ **********************/
 
 const startGame = (game_id) =>
   knex("games")
