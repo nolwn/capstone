@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Game from "./components/Game";
 import Header from "./components/Header";
+import NewUser from "./components/NewUser";
 
 import { request, socket } from "./utils";
 import { setAuthentication } from "./actions/authentication";
@@ -35,6 +36,7 @@ class App extends Component {
             <Header />
             <Switch>
               <Route path="/login" component={ Login } />
+              <Route path="/new-user" component={ NewUser } />
               <AuthenticatedRoute path="/game/:game_id" component={ Game } />
               <AuthenticatedRoute path="/" component={ Dashboard } />
             </Switch>

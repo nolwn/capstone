@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom"
 import {
   Card,
   CardBody,
@@ -80,6 +81,9 @@ class Login extends Component {
         </Form>
       </CardBody>
     </Card>
+
+    <Link to="/new-user">Create New User</Link>
+
   </div>
 }
 
