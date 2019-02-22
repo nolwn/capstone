@@ -46,7 +46,7 @@ class Login extends Component {
   }
 
   render = () =>
-  <div className="container login">
+  <div className="login">
     <Card className="mt-5">
       <CardBody>
         <Form onSubmit={ this.handleSubmit }>

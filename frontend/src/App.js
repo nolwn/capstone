@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Game from "./components/Game";
+import Header from "./components/Header";
 
 import { request, socket } from "./utils";
 import { setAuthentication } from "./actions/authentication";
@@ -28,13 +29,18 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login" component={ Login } />
-          <AuthenticatedRoute path="/game/:game_id" component={ Game } />
-          <AuthenticatedRoute path="/" component={ Dashboard } />
-        </Switch>
-      </BrowserRouter>
+      <div className="container">
+        <BrowserRouter>
+          <div>
+            <Header />
+            <Switch>
+              <Route path="/login" component={ Login } />
+              <AuthenticatedRoute path="/game/:game_id" component={ Game } />
+              <AuthenticatedRoute path="/" component={ Dashboard } />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
 }

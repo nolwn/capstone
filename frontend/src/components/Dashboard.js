@@ -12,7 +12,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <h1>ChessMatch</h1>
         <Row>
           <Col sm="4">

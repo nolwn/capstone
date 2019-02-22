@@ -2,13 +2,17 @@ import { request } from "../utils";
 
 const SET_AUTHENTICATION = "SET_AUTHENTICATION";
 const JOIN_GAME = "JOIN_GAME";
-
-
+const LOG_OUT = "LOGOUT";
 
 const setAuthentication = authData => ({
   type: SET_AUTHENTICATION,
   payload: authData
 });
+
+const logOut = () => {
+  localStorage.removeItem("token");
+  return { type: LOG_OUT };
+}
 
 const joinGame = (game_id, color, pushHistory) =>
   dispatch =>
@@ -20,4 +24,11 @@ const joinGame = (game_id, color, pushHistory) =>
       })
       .catch(err => console.error(err));
 
-export { JOIN_GAME, SET_AUTHENTICATION, joinGame, setAuthentication };
+export {
+  JOIN_GAME,
+  LOG_OUT,
+  SET_AUTHENTICATION,
+  joinGame,
+  logOut,
+  setAuthentication
+};
