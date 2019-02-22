@@ -32,9 +32,17 @@ const getPendingGame = game_id => {
             redisAsPromised.hgetall(GAME_ID + game_id)
           )
           .then(result =>
-            ({ ...result, position: JSON.parse(result.position) }));
+            ({
+              ...result,
+              position: JSON.parse(result.position),
+              turns: result.turns ? JSON.parse(result.turns) : null
+            }));
       } else {
-        return { ...result, position: JSON.parse(result.position)};
+        return {
+          ...result,
+          position: JSON.parse(result.position),
+          turns: result.turns ? JSON.parse(result.turns) : null
+        };
       }
   });
 };

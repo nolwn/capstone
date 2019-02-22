@@ -5,47 +5,20 @@ import chess from "chess-rules";
 import Highlight from "./Highlight";
 import store from "../store";
 import { updatePosition, revertPosition } from "../actions/game";
+import { getIndexFromPos, getPosFromIndex } from "../utils";
 
 class Piece extends Component{
   constructor(props) {
     super(props);
-    this.starting = this.getPosFromIndex(this.props.index, this.props.flip);
+    this.starting = getPosFromIndex(this.props.index, this.props.flip);
     this.pieceStyle = {
       position: "absolute",
       top: 64 * 7 + "px"
     };
   }
 
-  // Get the x and y values based on board index.
-  getPosFromIndex = (index, flip) => {
-    const position = ({
-      x: (index) % 8 * 64,
-      y: -1 * Math.floor((index) / 8) * 64
-    })
-
-    // flip if player is playing black
-    if (flip) {
-      position.x = 64 * 7 - position.x;
-      position.y = (-64 * 7) - position.y;
-    }
-
-    return position
-  }
-
-  // Get the index from a board position.
-  getIndexFromPos = (pos, flip) => {
-    let index = (Math.abs(pos.y) / 64) * 8 + (Math.abs(pos.x) / 64);
-
-    // flip if player is playing black
-    if (flip) {
-      index = 63 - index;
-    }
-
-    return index;
-  }
-
   handleDrag = (start, data, position, removeHighlights) => {
-    const moveIndex = this.getIndexFromPos(
+    const moveIndex = getIndexFromPos(
       { x: data.lastX, y: data.lastY },
       this.props.flip
     );
@@ -67,14 +40,14 @@ class Piece extends Component{
   }
 
   showOptions = (start, data, position, addHighlights) => {
-    const moveIndex = this.getIndexFromPos(
+    const moveIndex = getIndexFromPos(
       { x: data.lastX, y: data.lastY },
       this.props.flip
     );
     const legalMoves = chess.getAvailableMoves(position);
     const possibleMoves = legalMoves.reduce((acc, move) => {
       return [ ...acc, move.src === start ?
-        <Highlight pos={ this.getPosFromIndex(move.dst, this.props.flip) } /> :
+        <Highlight pos={ getPosFromIndex(move.dst, this.props.flip) } /> :
         null ]
     }, []
     );

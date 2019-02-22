@@ -13,7 +13,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <h1>ChessMatch</h1>
         <Row>
           <Col sm="4">
             <h2>Your Games</h2>

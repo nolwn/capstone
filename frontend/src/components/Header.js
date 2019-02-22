@@ -22,7 +22,14 @@ const Header = props =>
       <Collapse className="ml-auto" navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink onClick={ e => {
+            <NavLink>
+              Welcome, {props.authentication.username}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              style={{ cursor: "pointer", color:"#3399ee" }}
+              onClick={ e => {
                 props.logOut();
                 props.history.replace("/login");
               }

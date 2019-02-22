@@ -10,7 +10,7 @@ import Captives from "./Captives";
 import { request } from "../utils";
 import { getGame } from "../actions/game";
 
-let highlights = []
+// let highlights = [];
 
 class Game extends Component {
   componentDidMount = () => {

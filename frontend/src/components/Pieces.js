@@ -5,9 +5,10 @@ import chess from "chess-rules";
 
 import Highlight from "./Highlight";
 import Piece from "./Piece";
+import LastMove from "./LastMove";
 
 import { getGame, destroyGame } from "../actions/game";
-import { socket } from "../utils";
+import { socket, getPosFromIndex, getIndexFromPos } from "../utils";
 
 const piecesStyle = {
   position: "absolute",
@@ -29,6 +30,24 @@ class Pieces extends Component {
     }
   }
 
+  getLastMove = () => {
+    const turns = this.props.game.turns
+    const flip =  this.props.authentication.id == this.props.game.black;
+    console.log(this.props.game.turns)
+
+    if (turns) {
+      const turn = turns[turns.length - 1]
+      const src = getPosFromIndex(turn.src, flip);
+      const dst = getPosFromIndex(turn.dst, flip);
+
+
+
+      return [ <LastMove pos={ src } />, <LastMove pos={ dst } /> ]
+    } else {
+      return [];
+    }
+  }
+
   getGameUpdate = () => {
       this.props.getGame(this.props.gameId);
       console.log("fired a getGame")
@@ -43,8 +62,6 @@ class Pieces extends Component {
     socket.removeListener("update", this.getGameUpdate);
     this.props.destroyGame()
     console.log("component unmounting...");
-    // socket.removeAllListeners()
-
   }
 
   addHighlights = highlights => {
@@ -55,9 +72,8 @@ class Pieces extends Component {
     this.setState({ ...this.state, highlights: [] });
   }
 
-  render = () =>{
-    console.log(this.props)
-    return <div style={ piecesStyle }>
+  render = () =>
+    <div style={ piecesStyle }>
       {
         this.props.game.position.board.reduce((acc, cur, idx) => {
           return cur ? [ ...acc,
@@ -78,9 +94,8 @@ class Pieces extends Component {
       )
     }
     { this.state.highlights }
-    { console.log(socket) }
+    { this.getLastMove() }
     </div>
-  }
 }
 
 const mapStateToProps = ({ authentication, game }) => ({ authentication, game });

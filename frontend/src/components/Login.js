@@ -64,7 +64,7 @@ class Login extends Component {
           <FormGroup>
             <Label for="password">Password: </Label>
             <Input
-              type="text"
+              type="password"
               name="password"
               id="password"
               value={ this.state.password }
