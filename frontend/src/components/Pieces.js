@@ -75,28 +75,37 @@ class Pieces extends Component {
   }
 
   render = () =>
-    <div style={ piecesStyle }>
-      {
-        this.props.game.position.board.reduce((acc, cur, idx) => {
-          return cur ? [ ...acc,
-            <Piece
-              key={ idx }
-              gameId = { this.props.gameId }
-              color={ cur.side }
-              piece={ cur.type }
-              index={ idx }
-              position={ this.props.game.position }
-              addHighlights={ this.addHighlights }
-              removeHighlights={ this.removeHighlights }
-              flip={ this.props.authentication.id == this.props.game.black }
-            />
-        ] :
-          acc;
-        }, []
-      )
-    }
-    { this.state.highlights }
-    { this.getLastMove() }
+    <div style={{
+        width: 64 * 8,
+        height: 64 * 8,
+        position: "absolute",
+        left: 0,
+        right: 0,
+        margin: "auto"
+      }}>
+      <div style={ piecesStyle }>
+        {
+          this.props.game.position.board.reduce((acc, cur, idx) => {
+            return cur ? [ ...acc,
+              <Piece
+                key={ idx }
+                gameId = { this.props.gameId }
+                color={ cur.side }
+                piece={ cur.type }
+                index={ idx }
+                position={ this.props.game.position }
+                addHighlights={ this.addHighlights }
+                removeHighlights={ this.removeHighlights }
+                flip={ this.props.authentication.id == this.props.game.black }
+                />
+            ] :
+            acc;
+            }, []
+          )
+        }
+      { this.state.highlights }
+      { this.getLastMove() }
+      </div>
     </div>
 }
 

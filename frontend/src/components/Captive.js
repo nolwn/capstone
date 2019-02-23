@@ -6,15 +6,13 @@ const captiveStyle = {
 }
 
 const Captive = props =>
-<div>
   <span>
     <img
       style={ captiveStyle }
       draggable="false"
       src={ `/img/${props.color}-${props.piece}.svg` }
       />
+    x{ props.qty }
   </span>
-  <span>x{ props.qty }</span>
-</div>
 
 export default Captive;

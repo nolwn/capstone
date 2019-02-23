@@ -5,7 +5,11 @@ import BoardRow from "./BoardRow";
 const highlights = [];
 
 const Board = props =>
-<div style={{ width: 64 * 8 + "px", display: "flex" }}>
+<div style={{
+    width: 64 * 8 + "px",
+    display: "flex",
+    margin: "auto"
+  }}>
   {
     [ ..."12345678" ]
     .map((row, idx) =>

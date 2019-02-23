@@ -36,12 +36,11 @@ const findMissingPieces = board => {
 
 const captivesStyle = {
   position: "relative",
-  margin: "64px 0px 64px 20px",
-  height: 6 * 64 + "px",
-  minWidth: "124px"
+  width: 64 * 8 + "px",
+  margin: "auto"
 }
 
-const TakenPieces = props => {
+const Captives = props => {
   const captives = findMissingPieces(props.game.position.board);
   const flip = props.game.black == props.authentication.id;
 
@@ -50,24 +49,11 @@ const TakenPieces = props => {
       <div>
         {
           [ ..."PQRNB" ].map(el => {
-            if (captives[ flip ? "B" : "W" ][el]) {
+            if (captives[ props.side ][el]) {
               return <Captive
-                color={ flip ? "B" : "W" }
+                color={ props.side }
                 piece={ el }
-                qty={ captives[ flip ? "B" : "W" ][el] } />
-            }
-          })
-        }
-      </div>
-      <div style={{ position: "absolute", bottom: "0px" }}>
-        {
-          [ ..."PQRNB" ].map(el => {
-            if (captives[ flip ? "W" : "B" ][el]) {
-              return <Captive
-                  color={ flip ? "W" : "B" }
-                  piece={ el }
-                  qty={ captives[ flip ? "W" : "B" ][el] }
-                />
+                qty={ captives[ props.side ][el] } />
             }
           })
         }
@@ -79,4 +65,4 @@ const TakenPieces = props => {
 const mapStateToProps = ({ authentication, game }) =>
   ({ authentication, game });
 
-export default connect(mapStateToProps)(TakenPieces);
+export default connect(mapStateToProps)(Captives);
