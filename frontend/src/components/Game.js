@@ -9,6 +9,7 @@ import Pieces from "./Pieces";
 import Captives from "./Captives";
 import { request } from "../utils";
 import { getGame } from "../actions/game";
+import { getActiveGames } from "../actions/activeGames";
 
 // let highlights = [];
 
@@ -23,14 +24,55 @@ class Game extends Component {
   componentDidMount = () => {
     this.props.getGame(this.props.match.params.game_id);
     this.side = this.props.game.white == this.props.authentication.id ?
-    "W" : "B";
+      "W" : "B";
+    if (this.props.activeGames.length === 0) {
+      this.props.getActiveGames(this.props.authentication.id);
+    }
+  }
+
+  gameStatus = () => {
+    const game = this.props.activeGames
+      .find(game => game.id == this.props.match.params.game_id);
+
+    if (!game) {
+      return "";
+    }
+
+    console.log(game)
+
+    switch (this.props.game.status) {
+      case "OPEN":
+        return this.getOpponent(game);
+
+      case "PAT":
+        return "Stalemate!";
+
+      case "WHITEWON":
+        return "Checkmate. White wins!";
+
+      case "BLACKWON":
+        return "Checkmate. Black wins!";
+
+      default:
+        return "";
+    }
+
+  }
+
+  getOpponent = game => {
+      const opponent = game.white === this.props.authentication.username ?
+        game.black : game.white;
+
+      if (opponent == null) return "Waiting for opponent...";
+
+      return "Playing against " + opponent;
   }
 
   render = () =>
     <div>
       <Row className="mb-3 mt-2">
         <Col>
-          <h2 className="text-center">Playing against opponent</h2>
+          <h2 className="text-center">{ this.gameStatus() }</h2>
         </Col>
       </Row>
       <Row className="justify-content-md-center">
@@ -54,10 +96,10 @@ class Game extends Component {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getGame }, dispatch);
+  bindActionCreators({ getGame, getActiveGames }, dispatch);
 
-const mapStateToProps = ({ authentication, game }) =>
-  ({ authentication, game });
+const mapStateToProps = ({ authentication, game, activeGames }) =>
+  ({ authentication, game, activeGames });
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

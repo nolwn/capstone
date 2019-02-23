@@ -35,7 +35,6 @@ const detectFinished = (gameId) => {
       position = JSON.parse(position);
       if (chess.getGameStatus(position) !== "OPEN") {
         return storeGame(gameId, position)
-        .then(_ => flushGameFromRedis(gameId))
       }
     })
 }
