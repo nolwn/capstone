@@ -28,6 +28,8 @@ class Pieces extends Component {
     this.state = {
       highlights: []
     }
+
+    console.log(socket);
   }
 
   getLastMove = () => {

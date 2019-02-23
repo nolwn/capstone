@@ -1,4 +1,4 @@
-import { JOIN_GAME, LOG_OUT, SET_AUTHENTICATION } from "../actions/authentication";
+import { JOIN_GAME, LOG_OUT, CREATE_GAME, SET_AUTHENTICATION } from "../actions/authentication";
 
 const unAuthenticated = {
   pending: true,
@@ -9,6 +9,9 @@ const authentication = (state = unAuthenticated, action) => {
   switch (action.type) {
     case JOIN_GAME:
       return { ...state, claim: action.payload, pending: false };
+
+    case CREATE_GAME:
+      return { ...state, claim: action.payload }
 
     case LOG_OUT:
       return unAuthenticated;

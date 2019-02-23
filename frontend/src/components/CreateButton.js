@@ -1,24 +1,37 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button } from "reactstrap";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
 
 import { request } from "../utils";
+import { createGame } from "../actions/authentication";
+import store from "../store";
 
-const handleClick = (color, userId) => {
-  console.log(color)
-  const playerColor = "player_" + color;
-  const reqBody = {};
 
-  reqBody[playerColor] = userId
+class CreateButton extends Component {
+  handleClick = () => {
+    console.log(this.props)
+    const playerColor = "player_" + this.props.color;
+    const reqBody = {};
 
-  return request("post", "/games", reqBody );
+    reqBody[playerColor] = this.props.authentication.id;
+
+    this.props.createGame(reqBody, this.props.color, this.props.history.push)
+  }
+
+  render = () =>
+    <Button
+      onClick={ e =>
+        this.handleClick(this.props.color, this.props.authentication.id, this.props.history.push)
+      }>Start as { this.props.color }
+    </Button>;
+
 }
-
-const CreateButton = props =>
-  <Button
-    onClick={ e => handleClick(props.color, props.authentication.id) }
-  >Start as { props.color }</Button>;
 
 const mapStateToProps = ({ authentication }) => ({ authentication });
 
-export default connect(mapStateToProps)(CreateButton);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ createGame }, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateButton));

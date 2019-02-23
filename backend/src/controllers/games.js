@@ -21,6 +21,8 @@ const getPendingGames = (req, res, next) => {
 
 const createGame = (req, res, next) => {
   console.log(req.body);
+  let gameId;
+
   if (!(req.body.player_white ?
         !req.body.player_black :
         req.body.player_black)) { // XOR
@@ -35,13 +37,17 @@ const createGame = (req, res, next) => {
   return models.createGame(req.body, req.claim)
     .then(result => {
       if (!result) {
+        console.log("FROM THE CONTROLLER ", result)
         throw { status: 400, message: "Game could not be created" };
       }
 
-      return jwtAsPromised.sign(result, secret);
+      gameId = result.id;
+
+      return jwtAsPromised.sign(result.claim, secret);
     })
     .then(token => {
-      res.status(201).send(token);
+      console.log("SENDING TOKEN", { id: gameId, token })
+      res.status(201).send({ id: gameId, token });
     })
     .catch(next);
 }

@@ -11,12 +11,18 @@ class ActiveGames extends Component {
   componentDidMount = () => {
     console.log(this.props)
     this.props.getActiveGames(this.props.authentication.id);
-    socket.on("update", e => {
-      this.props.getActiveGames(this.props.authentication.id);
-    });
-    socket.on("Lobby Update", e =>
-      this.props.getActiveGames(this.props.authentication.id))
+    socket.on("update", this.activeGamesUpdate);
+    socket.on("Lobby Update", this.activeGamesUpdate);
   }
+
+  componentWillUnmount = () => {
+    socket.removeListener("Lobby Update", this.getActiveGames)
+    socket.removeListener("update", this.getActiveGames)
+  }
+
+  activeGamesUpdate = () => {
+    this.props.getActiveGames(this.props.authentication.id);
+  };
 
   render = () =>
     <ListGroup>

@@ -9,17 +9,19 @@ import CreateGame from "./CreateGame";
 import { socket } from "../utils";
 
 class Lobby extends Component {
+  lobbyUpdate = () => {
+    this.props.getGames()
+
+  }
+
   componentDidMount = () => {
     this.props.getGames();
     socket.emit("Join Lobby", "");
-    socket.on("Lobby Update", _ => {
-      console.log("running update")
-      this.props.getGames()
-    });
+    socket.on("Lobby Update", this.lobbyUpdate);
   }
 
   componentWillUnmount = () => {
-
+    socket.removeListener("Lobby Update", this.lobbyUpdate);
   }
 
   render = () =>

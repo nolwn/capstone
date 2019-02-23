@@ -51,7 +51,7 @@ const getPendingGame = game_id => {
 // TODO: add user who calls this route to game.
 const createGame = ({ player_white, player_black }, claim) => {
   const color = player_white ? "white" : "black";
-  let token;
+  let newClaim;
   let gameId;
 
   return knex("games")
@@ -59,11 +59,15 @@ const createGame = ({ player_white, player_black }, claim) => {
     .returning("*")
     .then(storedGame => gameId = storedGame[0].id)
     .then(_ => getAndCache(gameId))
-    .then(cachedGame => generateNewToken(cachedGame, claim, color))
-    .then(newToken => token = newToken)
-    .then(_ => addPlayerToRedis(gameId, claim.id, color))
     .then(_ => emitUpdate())
-    .then(_ => token);
+    .then(cachedGame => generateNewClaim(gameId, claim, color))
+    .then(resultClaim => {
+      console.log("RESULT CLAIM: ", resultClaim)
+      newClaim = resultClaim
+    })
+    .then(_ => ({ id: gameId, claim: newClaim }))
+    // .then(_ => addPlayerToRedis(gameId, claim.id, color))
+    // .then(_ => console.log(id: gameId, username: newClaim));
 }
 
 // Join a game, cache in Redis, return a new JWT token
@@ -77,7 +81,7 @@ const joinGame = (game_id, game, claim) => {
     .then(storedGame => startGame(storedGame[0].id))
     .then(storedGame => getAndCache(storedGame[0].id))
     .then(_ => emitUpdate())
-    .then(_ => generateNewToken(game_id, claim, game.color));
+    .then(_ => generateNewClaim(game_id, claim, game.color));
 }
 
 /**********************
@@ -90,7 +94,7 @@ const startGame = (game_id) =>
     .update("started_at", knex.fn.now())
     .returning("*");
 
-const generateNewToken = (game_id, claim, color) => {
+const generateNewClaim = (game_id, claim, color) => {
   const newClaim = { ...claim };
 
   newClaim.games[`game-${game_id}`] = color;
