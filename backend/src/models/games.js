@@ -59,7 +59,7 @@ const createGame = ({ player_white, player_black }, claim) => {
     .returning("*")
     .then(storedGame => gameId = storedGame[0].id)
     .then(_ => getAndCache(gameId))
-    .then(_ => emitUpdate())
+    .then(_ => emitUpdate(gameId))
     .then(cachedGame => generateNewClaim(gameId, claim, color))
     .then(resultClaim => {
       console.log("RESULT CLAIM: ", resultClaim)
@@ -80,7 +80,7 @@ const joinGame = (game_id, game, claim) => {
     .returning("*")
     .then(storedGame => startGame(storedGame[0].id))
     .then(storedGame => getAndCache(storedGame[0].id))
-    .then(_ => emitUpdate())
+    .then(_ => emitUpdate(game_id))
     .then(_ => generateNewClaim(game_id, claim, game.color));
 }
 
@@ -105,9 +105,11 @@ const generateNewClaim = (game_id, claim, color) => {
 const addPlayerToRedis = (gameId, playerId, color) =>
   redisAsPromised.hset(GAME_ID + gameId, "white", playerId)
 
-const emitUpdate = () => {
+const emitUpdate = gameId => {
   console.log("Emit to lobby!");
-  io.to("Lobby").emit("Lobby Update", "")
+  io.to("Lobby").emit("Lobby Update", "");
+  console.log("Emit to Game " + gameId + "!");
+  io.to("Game " + gameId).emit("update", "");
 }
 
 

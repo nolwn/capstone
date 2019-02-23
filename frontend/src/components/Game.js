@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Board from "./Board";
 import Pieces from "./Pieces";
 import Captives from "./Captives";
-import { request } from "../utils";
+import { request, socket } from "../utils";
 import { getGame } from "../actions/game";
 import { getActiveGames } from "../actions/activeGames";
 
@@ -28,6 +28,17 @@ class Game extends Component {
     if (this.props.activeGames.length === 0) {
       this.props.getActiveGames(this.props.authentication.id);
     }
+
+    socket.on("update", this.updateActiveGames);
+  }
+
+  componentWillUnmount = () => {
+    socket.removeListener("update", this.updateActiveGames);
+  }
+
+  updateActiveGames = () => {
+    console.log("FIRE!!!")
+    this.props.getActiveGames(this.props.authentication.id);
   }
 
   gameStatus = () => {
@@ -37,8 +48,6 @@ class Game extends Component {
     if (!game) {
       return "";
     }
-
-    console.log(game)
 
     switch (this.props.game.status) {
       case "OPEN":
