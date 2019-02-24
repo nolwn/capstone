@@ -92,7 +92,7 @@ const storeGame = (gameId, position) => {
             .insert(turnsToInsert)
         });
     })
-    .then(_ => flushGameFromRedis(gameId));
+    // .then(_ => flushGameFromRedis(gameId));
 }
 
 const flushGameFromRedis = gameId => {

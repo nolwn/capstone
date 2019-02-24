@@ -108,7 +108,7 @@ const generateNewClaim = (game_id, claim, color) => {
 }
 
 const addPlayerToRedis = (gameId, playerId, color) => {
-  return redisAsPromised.hgetall(GAME_ID + gameId)
+    return redisAsPromised.hgetall(GAME_ID + gameId)
     .then(result => {
       if (!result) {
         getAndCache(gameId)

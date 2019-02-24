@@ -45,6 +45,8 @@ class Game extends Component {
     const game = this.props.activeGames
       .find(game => game.id == this.props.match.params.game_id);
 
+    console.log(this.props.activeGames)
+
     if (!game) {
       return "";
     }

@@ -8,6 +8,15 @@ const TURN_ID = "_turn_id_";
 const getAndCache = game_id => {
   return knex("games")
     .where("games.id", game_id)
+    .leftJoin("users AS white", "white.id", "player_white")
+    .leftJoin("users AS black", "black.id", "player_black")
+    .select(
+      "games.player_white",
+      "games.player_black",
+      "games.previous_fen",
+      "white.username AS usernameWhite",
+      "black.username AS usernameBlack"
+    )
     .first()
     .then(result => {
       if(!result) {
@@ -22,7 +31,11 @@ const getAndCache = game_id => {
           "white",
           result.player_white,
           "black",
-          result.player_black
+          result.player_black,
+          "usernameWhite",
+          result.usernameWhite,
+          "usernameBlack",
+          result.usernameBlack
         );
       }
     })
