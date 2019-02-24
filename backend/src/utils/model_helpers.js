@@ -11,6 +11,7 @@ const getAndCache = game_id => {
     .leftJoin("users AS white", "white.id", "player_white")
     .leftJoin("users AS black", "black.id", "player_black")
     .select(
+      "games.id",
       "games.player_white",
       "games.player_black",
       "games.previous_fen",
@@ -23,25 +24,29 @@ const getAndCache = game_id => {
         throw { status: 404, message: "Game not found" };
 
       } else {
-        const position = chess.fenToPosition(result["previous_fen"]);
-        return redisAsPromised.hset(
-          GAME_ID + game_id,
-          "position",
-          JSON.stringify(position),
-          "white",
-          result.player_white,
-          "black",
-          result.player_black,
-          "usernameWhite",
-          result.usernameWhite,
-          "usernameBlack",
-          result.usernameBlack
-        );
+        return cacheGameFromDB(result)
       }
     })
     .then(result => redisAsPromised.hget(GAME_ID + game_id, "position"))
     .then(result => JSON.parse(result))
     .then(cachedGame => cacheGameState(game_id, cachedGame));
+}
+
+const cacheGameFromDB = result => {
+  const position = chess.fenToPosition(result["previous_fen"]);
+  return redisAsPromised.hset(
+    GAME_ID + result.id,
+    "position",
+    JSON.stringify(position),
+    "white",
+    result.player_white,
+    "black",
+    result.player_black,
+    "usernameWhite",
+    result.usernameWhite,
+    "usernameBlack",
+    result.usernameBlack
+  );
 }
 
 const cacheGameState = (gameId, cachedGame) => {

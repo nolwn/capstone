@@ -84,7 +84,7 @@ const joinGame = (game_id, game, claim) => {
       if (!data) throw { status: 400, message: "Unauthorized" }
     })
     .then(_ => startGame(game_id))
-    .then(_ => addPlayerToRedis(game_id, claim.id, game.color))
+    .then(_ => addPlayerToRedis(game_id, claim.id, claim.username, game.color))
     .then(_ => emitUpdate(game_id))
     .then(_ => generateNewClaim(game_id, claim, game.color));
 }
@@ -107,16 +107,29 @@ const generateNewClaim = (game_id, claim, color) => {
   return newClaim;
 }
 
-const addPlayerToRedis = (gameId, playerId, color) => {
+const addPlayerToRedis = (gameId, playerId, username, color) => {
     return redisAsPromised.hgetall(GAME_ID + gameId)
-    .then(result => {
-      if (!result) {
-        getAndCache(gameId)
+      .then(result => {
+        if (!result) {
+          return getAndCache(gameId)
 
-      } else {
-        redisAsPromised.hset(GAME_ID + gameId, color, playerId)
-      }
-    })
+        } else {
+
+          redisAsPromised.hset(GAME_ID + gameId, color, playerId);
+        }
+
+        return result
+      })
+      .then(result => {
+        const colorCap = color[0].toUpperCase() + color.slice(1);
+        colorCap[0] = colorCap[0].toUpperCase();
+        console.log(colorCap);
+        return redisAsPromised.hset(
+          GAME_ID + gameId,
+          `username${colorCap}`,
+          username
+        );
+      })
 }
 
 const emitUpdate = gameId => {

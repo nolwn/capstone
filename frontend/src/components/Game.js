@@ -37,13 +37,13 @@ class Game extends Component {
   }
 
   updateActiveGames = () => {
-    console.log("FIRE!!!")
+    console.log("FIRE!!!");
     this.props.getActiveGames(this.props.authentication.id);
   }
 
   gameStatus = () => {
-    const game = this.props.activeGames
-      .find(game => game.id == this.props.match.params.game_id);
+    const game = this.props.game;
+      // .find(game => game.id == this.props.match.params.game_id);
 
     console.log(this.props.activeGames)
 
@@ -71,10 +71,10 @@ class Game extends Component {
   }
 
   getOpponent = game => {
-      const opponent = game.white === this.props.authentication.username ?
-        game.black : game.white;
+      const opponent = game.white == this.props.authentication.id ?
+        game.usernameBlack : game.usernameWhite;
 
-      if (opponent == null) return "Waiting for opponent...";
+      if (opponent == "null") return "Waiting for opponent...";
 
       return "Playing against " + opponent;
   }
