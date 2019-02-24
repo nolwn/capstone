@@ -47,6 +47,7 @@ const emitUpdate = gameId => {
 }
 
 const storeGame = (gameId, position) => {
+  console.log("STORING GAME");
   return knex("games")
     .update({
       previous_fen: chess.positionToFen(position),
@@ -90,7 +91,8 @@ const storeGame = (gameId, position) => {
           return knex("turns")
             .insert(turnsToInsert)
         });
-    });
+    })
+    .then(_ => flushGameFromRedis(gameId));
 }
 
 const flushGameFromRedis = gameId => {

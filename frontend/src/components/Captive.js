@@ -12,7 +12,7 @@ const Captive = props =>
       draggable="false"
       src={ `/img/${props.color}-${props.piece}.svg` }
       />
-    x{ props.qty }
+    {props.qty > 1 ? "x" + props.qty : "" }
   </span>
 
 export default Captive;

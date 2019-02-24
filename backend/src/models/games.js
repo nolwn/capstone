@@ -27,6 +27,7 @@ const getPendingGame = game_id => {
   return redisAsPromised.hgetall(GAME_ID + game_id)
     .then(result => {
       if(!result) {
+        console.log("FOUND NOTHING");
         return getAndCache(game_id)
           .then(result =>
             redisAsPromised.hgetall(GAME_ID + game_id)
@@ -76,10 +77,15 @@ const joinGame = (game_id, game, claim) => {
   whereObject[`player_${game.color}`] = null;
   return knex("games")
     .update(`player_${game.color}`, claim.id)
-    .where(whereObject)
+    .where({ id: game_id })
+    .whereNull(`player_${game.color}`)
     .returning("*")
-    .then(storedGame => startGame(storedGame[0].id))
-    .then(storedGame => getAndCache(storedGame[0].id))
+    .then(([ data ]) => {
+      console.log(data);
+      if (!data) throw { status: 400, message: "Unauthorized" }
+    })
+    .then(_ => startGame(game_id))
+    .then(_ => addPlayerToRedis(game_id, claim.id, game.color))
     .then(_ => emitUpdate(game_id))
     .then(_ => generateNewClaim(game_id, claim, game.color));
 }
@@ -103,7 +109,7 @@ const generateNewClaim = (game_id, claim, color) => {
 }
 
 const addPlayerToRedis = (gameId, playerId, color) =>
-  redisAsPromised.hset(GAME_ID + gameId, "white", playerId)
+  redisAsPromised.hset(GAME_ID + gameId, color, playerId)
 
 const emitUpdate = gameId => {
   console.log("Emit to lobby!");
