@@ -47,7 +47,6 @@ const emitUpdate = gameId => {
 }
 
 const storeGame = (gameId, position) => {
-  console.log("STORING GAME");
   return knex("games")
     .update({
       previous_fen: chess.positionToFen(position),
@@ -64,7 +63,6 @@ const storeGame = (gameId, position) => {
           turns = JSON.parse(turns);
 
           for (let i = 0; i < turns.length; i += 2) {
-            console.log(i, turns[i], turns[i + 1]);
             let turnToInsert = {
               game_id: gameId,
               turn: Math.floor(i / 2 + 1),
@@ -83,7 +81,6 @@ const storeGame = (gameId, position) => {
 
             turnToInsert.pgn_black = blackTurn;
 
-            console.log("inserting", turnToInsert);
 
             turnsToInsert.push(turnToInsert);
           }

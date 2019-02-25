@@ -19,14 +19,12 @@ const createGame = (reqBody, color, pushHistory) =>
   dispatch =>
     request("post", "/games", reqBody)
       .then(({ data }) => {
-        console.log("CREATE", data.token)
         localStorage.setItem("token", data.token)
         dispatch({ type: CREATE_GAME, payload: data.token })
         pushHistory(`game/${data.id}`);
       });
 
 const joinGame = (game_id, color, pushHistory) => {
-  console.log(game_id, color, pushHistory)
   return dispatch =>
     request("patch", `/games/${game_id}/join`, { color })
       .then(({ data }) => {

@@ -5,7 +5,6 @@ const { GAME_ID, getAndCache, getGameTurn } = require("./model_helpers");
 const secret = process.env.SECRET;
 
 const isAuthenticated = (req, res, next) => {
-  console.log(secret)
   if (!req.headers.authorization) {
     next({ status: 400, message: "Bad Request" });
 
@@ -42,10 +41,6 @@ const isPlayerToken = (req, res, next) => {
   const claim = req.claim;
   const gameId = req.params.game_id;
 
-  console.log(gameId, claim)
-
-
-
   if (claim.games[`game-${gameId}`]) {
     next();
   } else {
@@ -56,8 +51,6 @@ const isPlayerToken = (req, res, next) => {
 const isTurn = (req, res, next) => {
   const gameId = req.params.game_id;
   const userColor = req.claim.games[`game-${gameId}`][0]
-
-  console.log(gameId, userColor)
 
   return getGameTurn(gameId)
     .then(gameTurn => {

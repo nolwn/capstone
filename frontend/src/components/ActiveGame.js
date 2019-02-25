@@ -1,19 +1,28 @@
-import React from "react";
+import React, { Component } from "react";
 import { ListGroupItem } from "reactstrap";
+import { socket } from "../utils";
 
-const ActiveGame = (props) => {
-  return <ListGroupItem
-      style={ props.color[0] === props.status ? { background: "#aaffaa" } : {}}
-      onClick={ e => props.pushHistory("/game/" + props.gameId)
+class ActiveGame extends Component {
+  componentDidMount = () => {
+    socket.emit("subscribe", this.props.gameId)
+  }
+
+  render = () =>
+    <ListGroupItem
+      style={
+        this.props.color[0] === this.props.status ?
+        { background: "#aaffaa" } : {}
+      }
+      onClick={ e => this.props.pushHistory("/game/" + this.props.gameId)
     }>
-    { props.opponent ? props.opponent : "Waiting for an opponent..." }
+    { this.props.opponent ? this.props.opponent : "Waiting for an opponent..." }
     <hr />
     {
-      props.color[0] === props.status ?
-      "Your turn!" :
-      "Your opponent's turn"
-    }
-  </ListGroupItem>;
+      this.props.color[0] === this.props.status ?
+        "Your turn!" :
+        "Your opponent's turn"
+      }
+    </ListGroupItem>;
 }
 
 export default ActiveGame;

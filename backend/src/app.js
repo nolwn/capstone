@@ -17,7 +17,7 @@ const gameRoutes = require("./routes/games");
 const userRoutes = require("./routes/users");
 
 app.use(bodyParser.json());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(cors());
 
 app.use("/auth", authRoutes);

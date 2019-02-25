@@ -62,7 +62,6 @@ const createGame = ({ player_white, player_black }, claim) => {
     .then(_ => emitUpdate(gameId))
     .then(cachedGame => generateNewClaim(gameId, claim, color))
     .then(resultClaim => {
-      console.log("RESULT CLAIM: ", resultClaim)
       newClaim = resultClaim
     })
     .then(_ => ({ id: gameId, claim: newClaim }))
@@ -80,7 +79,6 @@ const joinGame = (game_id, game, claim) => {
     .whereNull(`player_${game.color}`)
     .returning("*")
     .then(([ data ]) => {
-      console.log("DATA FROM JOIN", data);
       if (!data) throw { status: 400, message: "Unauthorized" }
     })
     .then(_ => startGame(game_id))
@@ -123,7 +121,6 @@ const addPlayerToRedis = (gameId, playerId, username, color) => {
       .then(result => {
         const colorCap = color[0].toUpperCase() + color.slice(1);
         colorCap[0] = colorCap[0].toUpperCase();
-        console.log(colorCap);
         return redisAsPromised.hset(
           GAME_ID + gameId,
           `username${colorCap}`,
