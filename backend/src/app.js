@@ -1,12 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const morgan = require("morgan");
 const port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
+  require("dotenv").config();
 }
 
 const { app, http } = require("./utils");
