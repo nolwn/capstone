@@ -5,7 +5,7 @@ const server = process.env.REACT_APP_CHESS;
 
 
 const request = (method, path, data) => {
-  return axios(path, {
+  return axios(server + path, {
     method,
     headers: {
       "Authorization": "bearer " + localStorage.getItem("token"),
