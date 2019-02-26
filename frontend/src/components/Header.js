@@ -21,7 +21,7 @@ const Header = props =>
       <div className="container">
         <NavbarBrand>
           <Link to="/">
-            <img src="/img/Logo.svg" height="40px" />
+            <img src="/img/Logo.svg" height="60px" />
           </Link>
         </NavbarBrand>
         <NavbarToggler isOpen="true" />
