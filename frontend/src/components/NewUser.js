@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Card, CardBody, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Container,
+  Card,
+  CardBody,
+  Form,
+  FormGroup,
+  Label,
+  Input
+} from "reactstrap";
 
 import { request } from "../utils";
 import { setAuthentication } from "../actions/authentication";
@@ -46,45 +54,54 @@ class NewUser extends Component {
     this.setState(newState);
 }
   render = () =>
-    <Card>
-      <CardBody>
-        <Form onSubmit = { this.handleSubmit }>
-          <FormGroup>
-            <Label for="username">Username</Label>
+    <Container>
+      <Card className="dark-card">
+        <CardBody>
+          <Form onSubmit = { this.handleSubmit }>
+            <FormGroup>
+              <Label for="username">Username</Label>
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={ e => this.handleChange("username", e.target.value) }
+                value={ this.state.username }
+                />
+            </FormGroup>
+            <FormGroup>
+              <Label for="password">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                autoComplete="new-password"
+                onChange={ e => this.handleChange("password", e.target.value) }
+                value={ this.state.password }
+                />
+            </FormGroup>
+            <FormGroup>
+              <Label for="retype-password">Retype Password</Label>
+              <Input
+                type="password"
+                name="retype-password"
+                placeholder="Retype password"
+                autoComplete="new-password"
+                onChange={ e => this.handleChange("retypePassword", e.target.value) }
+                value={ this.state.retypePassword }
+                />
+            </FormGroup>
             <Input
-              type="text"
-              name="username"
-              placeholder="username"
-              onChange={ e => this.handleChange("username", e.target.value) }
-              value={ this.state.username }
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
-            <Input
-              type="password"
-              name="password"
-              placeholder="password"
-              autoComplete="new-password"
-              onChange={ e => this.handleChange("password", e.target.value) }
-              value={ this.state.password }
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="retype-password">Retype Password</Label>
-            <Input
-              type="password"
-              name="retype-password"
-              placeholder="Retype password"
-              autoComplete="new-password"
-              onChange={ e => this.handleChange("retypePassword", e.target.value) }
-              value={ this.state.retypePassword }
-            />
-          </FormGroup>
-          <Input type="submit" />
-        </Form>
-      </CardBody>
-    </Card>
+              style={{
+                background: "#697884",
+                color: "white",
+                border: "none",
+                cursor: "pointer"
+              }}
+              type="submit" />
+          </Form>
+        </CardBody>
+      </Card>
+    </Container>
 }
 
 const mapDispatchToProps = dispatch =>

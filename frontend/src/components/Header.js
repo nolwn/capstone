@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -18,7 +19,11 @@ const Header = props =>
   <div>
     <Navbar expand="md">
       <div className="container">
-        <NavbarBrand><img src="/img/Logo.svg" height="40px" /></NavbarBrand>
+        <NavbarBrand>
+          <Link to="/">
+            <img src="/img/Logo.svg" height="40px" />
+          </Link>
+        </NavbarBrand>
         <NavbarToggler isOpen="true" />
         <Collapse className="ml-auto" navbar>
           <Nav className="ml-auto" navbar>
