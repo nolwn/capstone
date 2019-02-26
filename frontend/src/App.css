@@ -1,7 +1,46 @@
-.light {
-  background: #F3C29F;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600,800');
+
+body, html, #root {
+  background: #697884;
+  color: white;
+  font-family: "Open Sans", sans-serif;
 }
 
-.dark {
-  background: #9B5A16
+h1, h2, h3, h4, h5 {
+  font-family: "Open Sans ExtraBold", sans-serif;
+  font-weight: bold !important;
+}
+
+.navbar {
+  background: #425564;
+  color: white;
+  margin-bottom: 50px;
+}
+
+div.active-game {
+  border: none;
+  padding: 20px;
+  margin: 10px 0px;
+  background: #697884;
+}
+
+div.dark-card {
+  background: #425564;
+  padding : 10px 20px;
+  border: none;
+  margin: 20px 0;
+}
+
+button.btn.lobby-button {
+  margin: 7px 0px;
+  width: 100%;
+  background: #697884;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+span.lobby-opponent {
+  margin: 7px 0px;
+  display: inline-block;
+  padding: 7px 0px;
 }

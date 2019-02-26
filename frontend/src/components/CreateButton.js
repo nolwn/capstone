@@ -22,6 +22,7 @@ class CreateButton extends Component {
 
   render = () =>
     <Button
+      className="lobby-button"
       onClick={ e =>
         this.handleClick(this.props.color, this.props.authentication.id, this.props.history.push)
       }>Start as { this.props.color }

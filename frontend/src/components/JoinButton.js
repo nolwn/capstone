@@ -12,6 +12,7 @@ const handleJoin = (game, color, pushHistory) => {
 
 const JoinButton = props =>
   <Button
+    className="lobby-button"
     onClick= { e => {
       handleJoin(props.game, props.color, props.pushHistory)
       socket.emit("subscribe", props.game)

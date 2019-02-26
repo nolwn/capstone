@@ -36,7 +36,7 @@ const detectFinished = (gameId) => {
       if (chess.getGameStatus(position) !== "OPEN") {
         return storeGame(gameId, position)
       }
-    })
+    });
 }
 
 const emitUpdate = gameId => {

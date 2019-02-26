@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { ListGroupItem } from "reactstrap";
+import { Card } from "reactstrap";
 import { socket } from "../utils";
+
+
 
 class ActiveGame extends Component {
   componentDidMount = () => {
@@ -8,21 +10,22 @@ class ActiveGame extends Component {
   }
 
   render = () =>
-    <ListGroupItem
+    <Card
       style={
         this.props.color[0] === this.props.status ?
-        { background: "#aaffaa" } : {}
+        {} : {}
       }
+      className="active-game"
       onClick={ e => this.props.pushHistory("/game/" + this.props.gameId)
     }>
     { this.props.opponent ? this.props.opponent : "Waiting for an opponent..." }
-    <hr />
+    <br />
     {
       this.props.color[0] === this.props.status ?
         "Your turn!" :
         "Your opponent's turn"
       }
-    </ListGroupItem>;
+    </Card>;
 }
 
 export default ActiveGame;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CardBody, Table } from "reactstrap";
+import { Card, CardBody, Table } from "reactstrap";
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux";
 
@@ -25,34 +25,24 @@ class Lobby extends Component {
   }
 
   render = () =>
-    <CardBody>
-      <Table>
-        <thead>
-            <CreateGame />
-          <tr>
-            <td style={{ "border": "none" }}>
-              <h4>
-                Join a Game
-              </h4>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            this.props.lobby.filter(game =>
-              game.playerWhite !== this.props.authentication.username &&
-              game.playerBlack !== this.props.authentication.username
-            ).map(game => {
-              return <LobbyGame
-                key={ game.id }
-                pushHistory={ this.props.pushHistory }
-                game={ game }
-              />
-            })
-          }
-        </tbody>
-      </Table>
-    </CardBody>
+    <div>
+      <CreateGame />
+      <h2 style={{ marginTop: "50px" }}>
+        Join a Game
+      </h2>
+      {
+        this.props.lobby.filter(game =>
+          game.playerWhite !== this.props.authentication.username &&
+          game.playerBlack !== this.props.authentication.username
+        ).map(game => {
+          return <LobbyGame
+            key={ game.id }
+            pushHistory={ this.props.pushHistory }
+            game={ game }
+            />
+        })
+      }
+    </div>
 }
 
 const mapDispatchToProps = dispatch =>

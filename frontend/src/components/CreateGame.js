@@ -1,25 +1,21 @@
 import React from "react";
-import { Table, Button, CardBody } from "reactstrap";
+import { Row, Col, Card, Button, CardBody } from "reactstrap";
 
 import CreateButton from "./CreateButton";
 
 const CreateGame = props =>
-  <>
-      <tr colSpan="2">
-        <td style={{ "border": "none" }}>
-          <h4>
-            Create a new game
-          </h4>
-        </td>
-      </tr>
-      <tr colSpan="2">
-        <td style={{ "border": "none" }}>
+  <div>
+    <h2>Start a Game</h2>
+    <Card className="dark-card">
+      <Row>
+        <Col sm="6">
           <CreateButton color="white" />
-        </td>
-        <td style={{ "border": "none" }}>
+        </Col>
+        <Col sm="6">
           <CreateButton color="black" />
-        </td>
-      </tr>
-  </>;
+        </Col>
+      </Row>
+    </Card>
+  </div>
 
 export default CreateGame;

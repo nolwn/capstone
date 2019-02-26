@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import io from "socket.io-client"
 
+import "./App.css";
+
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
@@ -30,7 +32,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
+
         <BrowserRouter>
           <div>
             <Header />
@@ -42,7 +44,7 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
-      </div>
+
     );
   }
 }

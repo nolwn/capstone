@@ -12,14 +12,12 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <Row>
           <Col sm="4">
-            <h2>Your Games</h2>
             <ActiveGames pushHistory={ this.pushHistory } />
           </Col>
           <Col>
-            <h2>Game Lobby</h2>
             <Lobby pushHistory={ this.pushHistory } />
           </Col>
         </Row>

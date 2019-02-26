@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListGroup } from "reactstrap";
+import { Card } from "reactstrap";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
@@ -25,28 +25,31 @@ class ActiveGames extends Component {
   };
 
   render = () =>
-    <ListGroup>
-      {
-        this.props.activeGames.map((activeGame, key) => {
-          return (
-            <ActiveGame
-              key={ key }
-              opponent={
-                activeGame.white === this.props.authentication.username ?
-                activeGame.black : activeGame.white
-              }
-              color={
-                activeGame.white === this.props.authentication.username ?
-                "white" : "black"
-              }
-              status={ activeGame.status }
-              gameId={ activeGame.id }
-              pushHistory={ this.props.pushHistory }
-            />
-        );
-        })
-      }
-    </ListGroup>
+    <div>
+      <h2>Your Games</h2>
+      <Card className="dark-card">
+        {
+          this.props.activeGames.map((activeGame, key) => {
+            return (
+              <ActiveGame
+                key={ key }
+                opponent={
+                  activeGame.white === this.props.authentication.username ?
+                  activeGame.black : activeGame.white
+                }
+                color={
+                  activeGame.white === this.props.authentication.username ?
+                  "white" : "black"
+                }
+                status={ activeGame.status }
+                gameId={ activeGame.id }
+                pushHistory={ this.props.pushHistory }
+                />
+            );
+          })
+        }
+      </Card>
+    </div>
 }
 
 const mapStateToProps = ({ authentication, activeGames }) =>
