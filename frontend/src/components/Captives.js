@@ -37,7 +37,8 @@ const findMissingPieces = board => {
 const captivesStyle = {
   position: "relative",
   width: 64 * 8 + "px",
-  margin: "auto"
+  margin: "auto",
+  minHeight: "40px"
 }
 
 const Captives = props => {
