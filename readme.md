@@ -56,17 +56,17 @@ The dashboard gives you information about the games you are currently playing on
 
 ![the dashboard with labels](/img/dashboard-labeled.png)
 
-**Your Active Games **
+**Your Active Games**
 
-Your games in progress. The name is the name of your opponent. Below that is the game status. The blue pin indicates that it is your turn�.
+Your games in progress. The name is the name of your opponent. Below that is the game status. The blue pin indicates that it is your turn.
 
 **Start a new game**
 
- Click “Start as White” or ”Start as Black” to start a new game and add it to the lobby. If you are playing as white, you can make your first move before your opponent joins.�
+Click “Start as White” or ”Start as Black” to start a new game and add it to the lobby. If you are playing as white, you can make your first move before your opponent joins.
 
-**Join a Game **
+**Join a Game**
 
-Click “Join as White” or ”Join as Black” to start a game that someone else has created. The left side of each game panel represents white, the right represents black. So, if a players name is on the right, they are playing white and you can join black and visa versa.�
+Click “Join as White” or ”Join as Black” to start a game that someone else has created. The left side of each game panel represents white, the right represents black. So, if a players name is on the right, they are playing white and you can join black and visa versa.
 
 ![the board](/img/board.png)
 
