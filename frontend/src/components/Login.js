@@ -48,58 +48,58 @@ class Login extends Component {
   }
 
   render = () =>
-  <Container>
-    <div className="login">
-        <Card className="dark-card mt-5">
-          <CardBody>
-            <Form onSubmit={ this.handleSubmit }>
-              <FormGroup>
-                <Label for="username">Username: </Label>
-                <Input
-                  type="text"
-                  name="username"
-                  id="username"
-                  value={ this.state.username }
-                  placeholder="Enter your username..."
-                  onChange={ this.handleChange }
-                  />
-              </FormGroup>
-              <FormGroup>
-                <Label for="password">Password: </Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={ this.state.password }
-                  placeholder="Enter your password..."
-                  onChange={ this.handleChange }
-                  />
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  style={{
-                    background: "#697884",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer"
-                  }}
-                  type="submit"
-                  />
-              </FormGroup>
-            </Form>
-          </CardBody>
-        </Card>
+    <Container>
+      <div className="login">
+          <Card className="dark-card mt-5">
+            <CardBody>
+              <Form onSubmit={ this.handleSubmit }>
+                <FormGroup>
+                  <Label for="username">Username: </Label>
+                  <Input
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={ this.state.username }
+                    placeholder="Enter your username..."
+                    onChange={ this.handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="password">Password: </Label>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={ this.state.password }
+                    placeholder="Enter your password..."
+                    onChange={ this.handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    style={{
+                      background: "#697884",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer"
+                    }}
+                    type="submit"
+                    />
+                </FormGroup>
+              </Form>
+            </CardBody>
+          </Card>
 
-      <Link
-        to="/new-user"
-        style={{
-          color: "white"
-        }}>
-        Create New User
-      </Link>
+        <Link
+          to="/new-user"
+          style={{
+            color: "white"
+          }}>
+          Create New User
+        </Link>
 
-    </div>
-  </Container>
+      </div>
+    </Container>
 }
 
 const mapDispatchToProps = dispatch =>

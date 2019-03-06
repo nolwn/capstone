@@ -33,11 +33,11 @@ exports.seed = function(knex, Promise) {
             player_white: null,
             player_black: 1
           },
-          {
-            id: 6,
-            player_white: 4,
-            player_black: null
-          },
+          // {
+          //   id: 6,
+          //   player_white: 4,
+          //   player_black: null
+          // },
           {
             id: 7,
             player_white: 2,
