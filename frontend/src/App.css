@@ -28,7 +28,8 @@ div.dark-card {
   background: #425564;
   padding : 10px 20px;
   border: none;
-  margin: 20px 0;
+  margin: 0px 0 !important;
+  border-radius: 0px;
 }
 
 button.btn.lobby-button {

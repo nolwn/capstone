@@ -13,6 +13,7 @@ import {
 
 import { request } from "../utils";
 import { setAuthentication } from "../actions/authentication";
+import ErrorAlert from "./ErrorAlert";
 
 class Login extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class Login extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      error: ""
     }
   }
 
@@ -44,11 +46,23 @@ class Login extends Component {
 
         this.props.history.push("/");
       })
-      .catch(err => console.error(err))
-  }
+      .catch(err => {
+        this.setState({
+          ...this.state,
+          error: "Username and/or password is incorrect."
+        });
+
+        console.log(this.state);
+        console.error(err);
+      });
+  };
 
   render = () =>
     <Container>
+      <ErrorAlert
+        message={ this.state.error }
+        active={ !!this.state.error }
+      />
       <div className="login">
           <Card className="dark-card mt-5">
             <CardBody>
@@ -62,7 +76,7 @@ class Login extends Component {
                     value={ this.state.username }
                     placeholder="Enter your username..."
                     onChange={ this.handleChange }
-                    />
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password: </Label>
@@ -73,7 +87,7 @@ class Login extends Component {
                     value={ this.state.password }
                     placeholder="Enter your password..."
                     onChange={ this.handleChange }
-                    />
+                  />
                 </FormGroup>
                 <FormGroup>
                   <Input
@@ -84,7 +98,7 @@ class Login extends Component {
                       cursor: "pointer"
                     }}
                     type="submit"
-                    />
+                  />
                 </FormGroup>
               </Form>
             </CardBody>
