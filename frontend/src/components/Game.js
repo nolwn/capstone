@@ -81,27 +81,29 @@ class Game extends Component {
 
   render = () =>
     <div>
-      <Row className="mb-3 mt-2">
+      <Row style={{ margin: 0}}>
         <Col>
           <h2 className="text-center">{ this.gameStatus() }</h2>
         </Col>
       </Row>
-      <Row className="justify-content-md-center">
+      <Row style={{ margin: 0}}>
         <Col>
           <Captives side={
               this.props.game.white == this.props.authentication.id ?
               "W" : "B"
-          }/>
-          <Pieces gameId={ this.props.match.params.game_id } />
-          <Board side="white"/>
-          <Captives side={
-              this.props.game.white == this.props.authentication.id ?
-              "B" : "W"
-          }/>
-        </Col>
+            }/>
+            <Pieces gameId={ this.props.match.params.game_id } />
+            <Board side="white"/>
+            <Captives side={
+                this.props.game.white == this.props.authentication.id ?
+                "B" : "W"
+              }/>
+            </Col>
+      </Row>
+
       <div>
       </div>
-    </Row>
+
     </div>
 
 }
