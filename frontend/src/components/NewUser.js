@@ -11,6 +11,7 @@ import {
   Input
 } from "reactstrap";
 
+import ErrorAlert from "./ErrorAlert";
 import { request } from "../utils";
 import { setAuthentication } from "../actions/authentication";
 
@@ -21,7 +22,8 @@ class NewUser extends Component {
     this.state = {
       username: "",
       password: "",
-      retypePassword: ""
+      retypePassword: "",
+      error: ""
     }
   }
 
@@ -29,10 +31,21 @@ class NewUser extends Component {
     e.preventDefault();
 
     if (this.state.password.length < 7) {
-      console.error("Pick a longer password (greater than 6 characters)")
+      console.error("Pick a longer password (more than 6 characters)")
+      this.setState({
+        username: "",
+        password: "",
+        retypePassword: "",
+        error: "Pick a longer password (more than 6 characters)"
+      })
     } else if (this.state.password !== this.state.retypePassword) {
       console.error("Passwords don't match");
-      this.setState({ username: "", password: "", retypePassword: "" })
+      this.setState({
+        username: "",
+        password: "",
+        retypePassword: "",
+        error: "Passwords don't match"
+      })
     } else {
       return request("post", "/users", {
         username: this.state.username,
@@ -45,6 +58,14 @@ class NewUser extends Component {
 
           this.props.history.push("/");
         })
+        .catch(err => {
+          this.setState({
+            username: "",
+            password: "",
+            retypePassword: "",
+            error: err.response.data.message
+          })
+        });
     }
   }
 
@@ -55,6 +76,10 @@ class NewUser extends Component {
 }
   render = () =>
     <Container>
+      <ErrorAlert
+        message={ this.state.error }
+        active={ !!this.state.error }
+      />
       <Card className="dark-card">
         <CardBody>
           <Form onSubmit = { this.handleSubmit }>
