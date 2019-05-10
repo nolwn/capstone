@@ -28,24 +28,19 @@ class ErrorAlert extends Component {
     }
   };
 
-  fadeOut = () => {
-
-  };
-
   componentDidUpdate() {
     if (!!this.props.active && this.state.opacity < 1) {
       this.fadeIn();
     }
   }
 
-  render = () => {
-    return (
-      <div className="" style={{ ...this.errorAlertStyle, opacity: this.state.opacity }} role="alert">
+  render = () =>
+      <div
+        className=""
+        style={{ ...this.errorAlertStyle, opacity: this.state.opacity }}
+        role="alert"
+      >
         <p style={{ margin: 0 }}>{ this.props.message }</p>
-        { console.log("John Lithgow") }
       </div>
-    );
-  }
 }
-
 export default ErrorAlert;
